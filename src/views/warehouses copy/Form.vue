@@ -4,29 +4,18 @@
       <v-layout row wrap>
         <v-flex xs12 sm6>
           <v-hover>
-            <v-card
-              slot-scope="{ hover }"
-              class="mx-auto"
-              color="grey lighten-4"
-              max-width="600"
-            >
+            <v-card slot-scope="{ hover }" class="mx-auto" color="grey lighten-4" max-width="600">
               <v-icon large color="grey" class="icon-placeholder display-4 py-2">
                 mdi-image-filter-hdr
               </v-icon>
-              <v-img :aspect-ratio="16 / 9" :src="warehouseImage">
+              <v-img :aspect-ratio="16/9" :src="feedImage">
                 <v-expand-transition>
                   <div
                     v-if="hover"
                     class="d-flex transition-fast-in-fast-out primary v-card--reveal display-3 white--text"
                   >
                     <v-layout align-center justify-center row fill-height>
-                      <v-btn
-                        flat
-                        dark
-                        fab
-                        class="mt-4"
-                        @click="isReadonly ? null : openDialog()"
-                      >
+                      <v-btn flat dark fab class="mt-4" @click="isReadonly ? null : openDialog()">
                         <v-icon>camera</v-icon>
                       </v-btn>
                     </v-layout>
@@ -40,33 +29,38 @@
           <v-layout row wrap>
             <v-flex xs12>
               <v-text-field
-                v-model="warehouse.name"
+                v-model="feed.title"
                 :rules="rules.required"
                 class="required"
-                label="name"
+                label="Title"
                 required
                 :readonly="isReadonly"
               ></v-text-field>
             </v-flex>
             <v-flex xs12>
-              <v-textarea
-                label="description"
-                v-model="warehouse.description"
+              <v-textarea 
+                label="Caption" 
+                v-model="feed.caption"
                 :readonly="isReadonly"
               ></v-textarea>
             </v-flex>
             <v-flex xs12>
               <v-combobox
-                v-model="warehouse.location"
-                :items="warehouse.location"
-                label="location"
+                v-model="feed.tags"
+                :items="tags"
+                label="Tags"
                 chips
                 clearable
                 multiple
+                :loading="loadingTags"
                 :readonly="isReadonly"
               >
                 <template v-slot:selection="data">
-                  <v-chip :selected="data.selected" close>
+                  <v-chip
+                    :selected="data.selected"
+                    close
+                    @input="removeTag(data.item)"
+                  >
                     {{ data.item }}
                   </v-chip>
                 </template>
@@ -76,23 +70,8 @@
         </v-flex>
       </v-layout>
       <v-layout align-end justify-center pt-4>
-        <v-btn
-          color="primary darken-1"
-          flat
-          round
-          :disabled="loading"
-          :to="{ name: 'warehousesTable' }"
-          >Cancel</v-btn
-        >
-        <v-btn
-          color="primary"
-          round
-          :loading="loading"
-          :disabled="!valid"
-          @click.native="save"
-          v-if="!isReadonly"
-          >Save</v-btn
-        >
+        <v-btn color="primary darken-1" flat round :disabled="loading" :to="{name: 'warehousesTable'}">Cancel</v-btn>
+        <v-btn color="primary" round :loading="loading" :disabled="!valid" @click.native="save" v-if="!isReadonly">Save</v-btn>
       </v-layout>
     </v-container>
     <v-dialog scrollable persistent v-model="uploadDialog" full-width>
@@ -109,17 +88,8 @@
         </v-card-text>
         <v-card-actions class="pa-3">
           <v-spacer></v-spacer>
-          <v-btn
-            color="primary darken-1"
-            flat
-            round
-            :disabled="loading"
-            @click.native="close"
-            >Close</v-btn
-          >
-          <v-btn color="primary" round :disabled="!cropped" @click.native="setImage"
-            >Ok</v-btn
-          >
+          <v-btn color="primary darken-1" flat round :disabled="loading" @click.native="close">Close</v-btn>
+          <v-btn color="primary" round :disabled="!cropped" @click.native="setImage">Ok</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -128,43 +98,39 @@
 
 <script>
 import PhotoCropper from "../../components/helpers/PhotoCropper";
-import LocationPicker from "../../components/helpers/LocationPicker.vue";
-import {
-  newWarehouse,
-  updateWarehouse,
-  getWarehouse,
-} from "../../api/warehouses/warehouses";
+import { newWarehouse, updateWarehouse, getWarehouse, getAllTags } from "../../api/warehouses/warehouses";
 
 export default {
-  components: { PhotoCropper, LocationPicker },
+  components: { PhotoCropper },
   data() {
     return {
-      warehouseID: this.$route.params.id,
-      imageSrc: "",
-      warehouse: {
-        name: null,
-        description: null,
-        location: null,
-        image: "",
+      feedID: this.$route.params.id,
+      tags: [],
+      imageSrc: '',
+      feed: {
+        title: null,
+        caption: null,
+        image: '',
+        tags: []
       },
       photoOptions: {
         width: 640,
         height: 360,
         boundaryWidth: 700,
         boundaryHeight: 400,
-        circle: false,
+        circle: false
       },
 
       // Form Rules
       uploadDialog: false,
       valid: false,
       loading: false,
-      // loadingTags: false,
+      loadingTags: false,
       rules: {
-        required: [(v) => !!v || "This field is required"],
+        required: [v => !!v || "This field is required"]
       },
       // =================
-    };
+    }
   },
   mounted() {
     this.initData();
@@ -173,8 +139,8 @@ export default {
     /**
      * Display image
      */
-    warehouseImage() {
-      return this.warehouse.image ? this.warehouse.image : "";
+    feedImage() {
+      return this.feed.image ? this.feed.image : '';
     },
     /**
      * Check if image has been cropped
@@ -186,8 +152,8 @@ export default {
      * Check if user has access
      */
     isReadonly() {
-      return !this.hasAccess(["write", "admin"]);
-    },
+      return !this.hasAccess(['write', 'admin']);
+    }
   },
   methods: {
     /**
@@ -196,31 +162,31 @@ export default {
     async initData() {
       try {
         this.loading = true;
-        // this.loadingTags = true;
-        // const tags = await getAllTags();
-        // this.tags = tags.data.data;
-        if (this.warehouseID) {
-          const warehouse = await getWarehouse(this.warehouseID);
-          this.warehouse = warehouse.data.data;
+        this.loadingTags = true;
+        const tags = await getAllTags();
+        this.tags = tags.data.data;
+        if (this.feedID) {
+          const feed = await getWarehouse(this.feedID);
+          this.feed = feed.data.data;
         }
       } catch (error) {
         this.notifyErrors(error);
       } finally {
         this.loading = false;
-        // this.loadingTags = false;
+        this.loadingTags = false;
       }
     },
-
+    
     /**
      * Collect and save data
      */
     async save() {
       this.loading = true;
-      let data = JSON.parse(JSON.stringify(this.warehouse));
+      let data = JSON.parse(JSON.stringify(this.feed));
       try {
         if (this.$refs.form.validate()) {
-          if (this.warehouseID) {
-            data._id = this.warehouseID;
+          if(this.feedID) {
+            data._id = this.feedID;
             await updateWarehouse(data);
           } else {
             await newWarehouse(data);
@@ -242,7 +208,7 @@ export default {
     openDialog() {
       this.uploadDialog = true;
       this.$nextTick(() => {
-        this.imageSrc = this.warehouse.image;
+        this.imageSrc = this.feed.image;
       });
     },
 
@@ -250,7 +216,7 @@ export default {
      * Set image to main data from result of helper component
      */
     setImage() {
-      this.warehouse.image = this.imageSrc;
+      this.feed.image = this.imageSrc;
       this.close();
     },
 
@@ -259,8 +225,16 @@ export default {
      */
     close() {
       this.uploadDialog = false;
-      this.imageSrc = "";
+      this.imageSrc = '';
     },
-  },
-};
+
+    /**
+     * Remove selected tag
+     */
+    removeTag(tag) {
+      this.feed.tags.splice(this.feed.tags.indexOf(tag), 1)
+      this.feed.tags = [...this.feed.tags]
+    }
+  }
+}
 </script>

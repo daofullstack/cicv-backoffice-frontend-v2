@@ -18,6 +18,7 @@ const menuItems = [
     names: [
       "dashboard", 
       "usersTable", 
+      "usersTable2", 
       "rolesTable", 
       "siteConfigurations", 
       "accountLogs"
@@ -25,6 +26,7 @@ const menuItems = [
   },
   { icon: "dashboard", text: "Dashboard", name: "dashboard" },
   { icon: "group", text: "User Management", name: "usersTable" },
+  { icon: "group", text: "User Management2", name: "usersTable2" },
   { icon: "lock", text: "Roles and Permissions", name: "rolesTable" },
   { icon: "settings", text: "Site Configurations", name: "siteConfigurations" },
   { icon: "update", text: "Account Logs", name: "accountLogs" },

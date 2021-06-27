@@ -2,13 +2,17 @@
   <div>
     <v-toolbar flat class="main-nav main-title">
       <v-list class="pa-0">
-        <v-list-tile avatar :to="{name: 'dashboard'}">
+        <v-list-tile avatar :to="{ name: 'dashboard' }">
           <v-list-tile-avatar>
-            <img :to="{name: 'dashboard'}" src="@/assets/logo-small.svg" v-if="miniVariant">
+            <img
+              :to="{ name: 'dashboard' }"
+              src="@/assets/logo_cicv.jpeg"
+              v-if="miniVariant"
+            />
           </v-list-tile-avatar>
 
           <v-list-tile-content>
-            <img src="@/assets/logo.svg" style="width: 75%;">
+            <img src="@/assets/logo_cicv.jpeg" style="width: 75%" />
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -31,12 +35,18 @@
             >
               <v-list-tile slot="activator" :key="menu.name">
                 <v-list-tile-content>
-                  <v-list-tile-title class="font-weight-bold">{{ menu.text }}</v-list-tile-title>
+                  <v-list-tile-title class="font-weight-bold">{{
+                    menu.text
+                  }}</v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
               <v-tooltip right v-for="child in menu.children" :key="child.name">
                 <template v-slot:activator="{ on }">
-                  <v-list-tile :to="{name: child.name}" v-on="miniVariant ? on : null" :key="child.name">
+                  <v-list-tile
+                    :to="{ name: child.name }"
+                    v-on="miniVariant ? on : null"
+                    :key="child.name"
+                  >
                     <v-list-tile-action v-if="child.icon">
                       <v-icon v-if="miniVariant" class="caption">{{ child.icon }}</v-icon>
                     </v-list-tile-action>
@@ -50,12 +60,14 @@
             </v-list-group>
             <v-tooltip right v-else :key="menu.name">
               <template v-slot:activator="{ on }">
-                <v-list-tile :to="{name: menu.name}" v-on="miniVariant ? on : null">
+                <v-list-tile :to="{ name: menu.name }" v-on="miniVariant ? on : null">
                   <v-list-tile-action>
                     <v-icon>{{ menu.icon }}</v-icon>
                   </v-list-tile-action>
                   <v-list-tile-content>
-                    <v-list-tile-title class="font-weight-bold">{{ menu.text }}</v-list-tile-title>
+                    <v-list-tile-title class="font-weight-bold">{{
+                      menu.text
+                    }}</v-list-tile-title>
                   </v-list-tile-content>
                 </v-list-tile>
               </template>
@@ -72,7 +84,11 @@
         </v-btn>
       </v-list-tile>
       <v-list-tile v-if="!miniVariant">
-        <v-btn icon class="toggle-drawer hidden-sm-and-down" @click.stop="miniVariant = !miniVariant">
+        <v-btn
+          icon
+          class="toggle-drawer hidden-sm-and-down"
+          @click.stop="miniVariant = !miniVariant"
+        >
           <v-icon>chevron_left</v-icon>
         </v-btn>
       </v-list-tile>
@@ -80,19 +96,19 @@
   </div>
 </template>
 <script>
-import store from '@/store';
+import store from "@/store";
 import { mapGetters, mapActions } from "vuex";
-import menuItems from './menuItems';
+import menuItems from "./menuItems";
 
 export default {
   data: () => ({
-    miniVariant: store.getters['template/miniVariant'],
-    items: [...menuItems]
+    miniVariant: store.getters["template/miniVariant"],
+    items: [...menuItems],
   }),
   computed: {
     ...mapGetters({
       user: "user/profile",
-      menu: "auth/role"
+      menu: "auth/role",
     }),
     menus() {
       /**
@@ -100,22 +116,22 @@ export default {
        */
       if (!this.isSuperAdmin()) return this.fetchMenu();
       return this.items;
-    }
+    },
   },
   watch: {
     /**
      * Observe sidebar state and save it to store
      */
-    miniVariant (val) {
+    miniVariant(val) {
       this.setMiniVariant(val);
-    }
+    },
   },
   methods: {
     /**
      * Import methods from store actions
      */
     ...mapActions({
-      setMiniVariant: 'template/setMiniVariant'
+      setMiniVariant: "template/setMiniVariant",
     }),
     /**
      * Get permitted routes from store then
@@ -125,23 +141,25 @@ export default {
     fetchMenu() {
       const newMenu = [];
       const items = JSON.parse(JSON.stringify(this.items));
-      items.forEach(item => {
+      items.forEach((item) => {
         const menus = JSON.parse(JSON.stringify(this.menu.permissions));
-        const permitted = menus.some(menu => menu.name == item.name);
+        const permitted = menus.some((menu) => menu.name == item.name);
         if (item.heading) {
-          const hasHeading = menus.some(menu => item.names.includes(menu.name));
+          const hasHeading = menus.some((menu) => item.names.includes(menu.name));
           if (hasHeading) newMenu.push(item);
         }
         if (item.children) {
-          const newChild = item.children.filter(child => menus.some(menu => child.name == menu.name));
+          const newChild = item.children.filter((child) =>
+            menus.some((menu) => child.name == menu.name)
+          );
           item.children = newChild;
           if (newChild.length) newMenu.push(item);
         }
-        const isPresent = newMenu.some(menu => menu.name == item.name);
-        if(permitted && !isPresent) newMenu.push(item)
+        const isPresent = newMenu.some((menu) => menu.name == item.name);
+        if (permitted && !isPresent) newMenu.push(item);
       });
       return newMenu;
-    }
-  }
+    },
+  },
 };
 </script>
