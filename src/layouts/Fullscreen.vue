@@ -3,7 +3,7 @@
     <v-content>
       <v-container fluid class="login-container">
         <transition name="fade" mode="out-in" :duration="{ enter: 100, leave: 50 }">
-          <slot/>
+          <slot />
         </transition>
       </v-container>
     </v-content>
@@ -16,9 +16,8 @@ export default {
   data() {
     return {};
   },
-  mounted() {
-  },
+  mounted() {},
   computed: {},
-  watch: {}
+  watch: {},
 };
 </script>

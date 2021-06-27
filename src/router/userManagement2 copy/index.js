@@ -5,16 +5,16 @@ const PendingUsersTable = () => import('@/views/userManagement2/pendingUsers/Tab
 
 const userManagement2 = [
   {
-    path: '/boardingtype',
-    name: 'boardingtype',
+    path: '/users2',
+    name: 'users2',
     meta: { title: 'User Management 2', layout: 'admin', requiresAuth: true },
     component: Users,
-    redirect: '/boardingtype/table',
+    redirect: '/users2/table',
     children: [
       {
-        path: '/boardingtype/table',
+        path: '/users2/table',
         name: 'usersTable2',
-        parent: 'boardingtype',
+        parent: 'users2',
         component: UsersTable,
         props: true,
         meta: {
@@ -25,9 +25,9 @@ const userManagement2 = [
         }
       },
       {
-        path: '/boardingtype/add',
+        path: '/users2/add',
         name: 'usersAdd2',
-        parent: 'boardingtype',
+        parent: 'users2',
         component: UsersForm,
         props: true,
         meta: {
@@ -39,9 +39,9 @@ const userManagement2 = [
         }
       },
       {
-        path: '/boardingtype/edit/:id',
+        path: '/users2/edit/:id',
         name: 'usersEdit2',
-        parent: 'boardingtype',
+        parent: 'users2',
         component: UsersForm,
         props: true,
         meta: {
@@ -52,9 +52,9 @@ const userManagement2 = [
         }
       },
       {
-        path: '/boardingtype/pending',
+        path: '/users2/pending',
         name: 'usersPending2',
-        parent: 'boardingtype',
+        parent: 'users2',
         component: PendingUsersTable,
         props: true,
         meta: {

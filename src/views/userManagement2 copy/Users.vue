@@ -23,7 +23,7 @@ export default {
           href: "#",
         },
         {
-          text: "boardingtype",
+          text: "Users",
           disabled: false,
           href: "#",
         },

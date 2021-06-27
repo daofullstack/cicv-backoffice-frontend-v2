@@ -35,144 +35,42 @@
       <v-layout row wrap>
         <v-flex xs12 sm4 md4>
           <v-text-field
-            v-model="editedItem.firstName"
-            label="First Name"
+            v-model="editedItem.name"
+            label=" Name"
             class="required"
-            :rules="rules.firstName"
+            :rules="rules.name"
             required
             :readonly="isReadonly"
           ></v-text-field>
         </v-flex>
         <v-flex xs12 sm4 md4>
           <v-text-field
-            v-model="editedItem.lastName"
-            label="Last Name"
+            v-model="editedItem.description"
+            label="description"
             :readonly="isReadonly"
           ></v-text-field>
         </v-flex>
-        <v-flex xs12 sm4 md4>
-          <v-tooltip top>
-            <template v-slot:activator="{ on }">
-              <v-autocomplete
-                :items="roles"
-                v-model="editedItem.roleID"
-                :rules="rules.roleID"
-                label="Role"
-                class="required"
-                required
-                :readonly="isReadonly || isAdmin"
-                v-on="isReadonly || isAdmin ? on : null"
-              ></v-autocomplete>
-            </template>
-            <span>Only Admin can edit</span>
-          </v-tooltip>
-        </v-flex>
-        <v-flex xs12 sm4 md4>
-          <v-tooltip top>
-            <template v-slot:activator="{ on }">
-              <v-text-field
-                v-model="editedItem.username"
-                :rules="rules.username"
-                label="Username"
-                class="required"
-                required
-                :readonly="isReadonly || isAdmin"
-                v-on="isReadonly || isAdmin ? on : null"
-              ></v-text-field>
-            </template>
-            <span>Only Admin can edit</span>
-          </v-tooltip>
-        </v-flex>
-        <v-flex xs12 sm4 md4>
-          <v-tooltip top>
-            <template v-slot:activator="{ on }">
-              <v-text-field
-                v-model="editedItem.email"
-                :rules="rules.email"
-                label="Email"
-                type="email"
-                class="required"
-                required
-                :readonly="isReadonly || isAdmin"
-                v-on="isReadonly || isAdmin ? on : null"
-              ></v-text-field>
-            </template>
-            <span>Only Admin can edit</span>
-          </v-tooltip>
-        </v-flex>
-        <v-flex xs12 sm4 md4 v-if="!$route.params.id">
-          <v-tooltip top>
-            <template v-slot:activator="{ on }">
-              <v-text-field
-                v-model="editedItem.password"
-                :rules="rules.password"
-                :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-                :type="showPassword ? 'text' : 'password'"
-                label="Password"
-                @click:append="isReadonly ? null : (showPassword = !showPassword)"
-                required
-                class="required"
-                :readonly="isReadonly || isAdmin"
-                v-on="isReadonly || isAdmin ? on : null"
-              ></v-text-field>
-            </template>
-            <span>Only Admin can edit</span>
-          </v-tooltip>
-        </v-flex>
-        <v-flex xs12 sm4 md4 v-else>
-          <v-tooltip top>
-            <template v-slot:activator="{ on }">
-              <v-text-field
-                v-model="editedItem.password"
-                :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-                :type="showPassword ? 'text' : 'password'"
-                label="Password"
-                :readonly="!changePassword || isReadonly || isAdmin"
-                :append-outer-icon="changePassword ? 'lock_open' : 'lock'"
-                @click:append-outer="
-                  isReadonly ? null : (changePassword = !changePassword)
-                "
-                @click:append="isReadonly ? null : (showPassword = !showPassword)"
-                v-on="isReadonly || isAdmin ? on : null"
-              ></v-text-field>
-            </template>
-            <span>Only Admin can edit</span>
-          </v-tooltip>
-        </v-flex>
+
         <v-flex xs12 sm4 md4>
           <v-radio-group
-            v-model="editedItem.gender"
+            v-model="editedItem.isActive"
             row
             class="justify-center"
             :readonly="isReadonly"
           >
-            <v-radio label="Male" value="male" color="blue"></v-radio>
-            <v-radio label="Female" value="female" color="blue"></v-radio>
+            <v-radio label="Vrai" value="true" color="blue"></v-radio>
+            <v-radio label="Faux" value="false" color="blue"></v-radio>
           </v-radio-group>
         </v-flex>
-        <v-flex xs12 sm4 md4>
-          <DatePicker
-            label="Date of Birth"
-            :date.sync="editedItem.dateOfBirth"
-            :rules="rules.dateOfBirth"
-            required
-            className="required"
-            :readonly="isReadonly"
-          ></DatePicker>
-        </v-flex>
-        <v-flex xs12 sm4 md4>
-          <v-text-field
-            v-model="editedItem.phone"
-            label="Phone"
-            required
-            :readonly="isReadonly"
-          ></v-text-field>
-        </v-flex>
       </v-layout>
-      <Address :value.sync="editedItem.address" :readonly="isReadonly"></Address>
     </v-form>
     <v-layout align-end justify-center pt-4>
-      <v-btn color="primary darken-1" flat round :disabled="loading" to="/users2/table"
+      <v-btn
+        color="primary darken-1"
+        flat
+        round
+        :disabled="loading"
+        to="/boardingtype/table"
         >Cancel</v-btn
       >
       <v-btn
@@ -192,28 +90,15 @@
 import { newUser, updateUser, getUser } from "../../../api/userManagement2/users";
 import { getRandomAvatar } from "../../../components/helpers/jsUtills/getAvatar";
 import { getRoleOptions } from "../../../api/userManagement2/roles";
-import DatePicker from "../../../components/helpers/DatePicker";
-import Address from "../../../components/helpers/Address";
 export default {
-  components: { DatePicker, Address },
+  components: {},
   data() {
     return {
       roles: [],
       editedItem: {
-        firstName: "",
-        lastName: "",
-        username: "",
-        email: "",
-        password: "",
-        roleID: "",
-        phone: "",
-        gender: "male",
-        address: {
-          country: "",
-          state: "",
-          city: "",
-          streetName: "",
-        },
+        name: "",
+        description: "",
+        isActive: true,
         image: "",
         avatar: "",
       },
@@ -222,27 +107,10 @@ export default {
       valid: false,
       loading: false,
       loadingBtn: false,
-      showPassword: false,
-      changePassword: false,
+
       rules: {
-        firstName: [(v) => !!v || "First name is required"],
-        username: [
-          (v) => !!v || "Username is required",
-          (v) => v.length >= 4 || "Username must have at least 4 letters.",
-          (v) =>
-            /^([a-zA-Z0-9._])+$/.test(v) ||
-            "Character not allowed. Allowed: (a-z), (A-Z), (0-9), (.), (_)",
-        ],
-        email: [
-          (v) => !!v || "Email is required",
-          (v) => this.isEmailValid(v) || "Email is not valid",
-        ],
-        password: [
-          (v) => !!v || "Password is required",
-          (v) => (!!v && v.length >= 5) || "Password must have at least 4 letters",
-        ],
-        roleID: [(v) => !!v || "Role is required"],
-        dateOfBirth: [(v) => !!v || "Date of Birth is required"],
+        name: [(v) => !!v || "Name is required"],
+        description: [(v) => !!v || "description is required"],
       },
       // =================
     };
@@ -329,16 +197,6 @@ export default {
      */
     getAvatar() {
       this.editedItem.avatar = getRandomAvatar();
-    },
-
-    /**
-     * Validate Email
-     * @param {String} email
-     * @returns {Boolean}
-     */
-    isEmailValid(email) {
-      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(String(email).toLowerCase());
     },
   },
 };

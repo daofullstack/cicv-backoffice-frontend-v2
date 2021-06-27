@@ -1,11 +1,11 @@
 import { http } from '../http-service';
 
 // ======= User Management
-const GET_USERS_URL = `boardingtype/table`;
-const GET_USER_URL = (id) => `boardingtype/${id}`;
-const ACTION_USER_URL = `boardingtype`;
-const MY_PROFILE_URL = `boardingtype/my-profile`;
-const MY_PROFILE_IMAGE_URL = `boardingtype/my-profile/image`;
+const GET_USERS_URL = `users2/table`;
+const GET_USER_URL = (id) => `users2/${id}`;
+const ACTION_USER_URL = `users2`;
+const MY_PROFILE_URL = `users2/my-profile`;
+const MY_PROFILE_IMAGE_URL = `users2/my-profile/image`;
 
 export function getUsers(data) {
   return http().post(GET_USERS_URL, data);
