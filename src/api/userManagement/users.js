@@ -7,6 +7,9 @@ const ACTION_USER_URL = `users`;
 const MY_PROFILE_URL = `users/my-profile`;
 const MY_PROFILE_IMAGE_URL = `users/my-profile/image`;
 
+/******* other */
+const GET_USERS_OPTIONS_URL = `roles/options2`;
+
 export function getUsers(data) {
   return http().post(GET_USERS_URL, data);
 }
@@ -34,4 +37,10 @@ export function updateMyProfile(data) {
 
 export function updateMyProfileImage(data) {
   return http().put(MY_PROFILE_IMAGE_URL, data);
+}
+
+/****** get user for select liste */
+
+export function getUserOptions() {
+  return http().get(GET_USERS_OPTIONS_URL);
 }

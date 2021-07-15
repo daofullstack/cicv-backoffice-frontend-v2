@@ -19,7 +19,14 @@ import uiElements from './uiElements';
 /*****new import */
 
 import warehouses from './warehouses';
-
+import transactionManagement from './transactionManagement';
+import colisManagement from './colisManagement';
+import colisTypeManagement from './colisTypeManagement';
+import warehouseManagement from './warehouseManagement';
+import colisTrackerManagement from './colisTrackerManagement';
+import deliveryManManagement from './deliveryManManagement';
+import clientManagement from './clientManagement';
+import agentManagement from './agentManagement';
 /**
  * Define routes
  */
@@ -36,7 +43,14 @@ const routes = [
   /** new routes */
   ...warehouses,
   ...userManagement2,
-
+  ...transactionManagement,
+  ...colisManagement,
+  ...colisTypeManagement,
+  ...warehouseManagement,
+  ...colisTrackerManagement,
+  ...deliveryManManagement,
+  ...clientManagement,
+  ...agentManagement,
 ];
 
 Vue.use(Router);

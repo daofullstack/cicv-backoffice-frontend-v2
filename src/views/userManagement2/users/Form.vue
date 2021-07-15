@@ -58,8 +58,8 @@
             class="justify-center"
             :readonly="isReadonly"
           >
-            <v-radio label="Vrai" value="true" color="blue"></v-radio>
-            <v-radio label="Faux" value="false" color="blue"></v-radio>
+            <v-radio label="Activer" value="true" color="blue"></v-radio>
+            <v-radio label="Desactiver" value="false" color="blue"></v-radio>
           </v-radio-group>
         </v-flex>
       </v-layout>
@@ -129,13 +129,13 @@ export default {
         : "";
     },
     /**
-     * Check wether user has access write or admin
+     * Check wether boarding_type has access write or admin
      */
     isReadonly() {
       return !this.hasAccess(["write", "admin"]);
     },
     /**
-     * Check wether user has access admin
+     * Check wether boarding_type has access admin
      */
     isAdmin() {
       return !this.hasAccess(["admin"]);
@@ -146,7 +146,7 @@ export default {
   },
   methods: {
     /**
-     * Load selected user data
+     * Load selected boarding_type data
      */
     async initData() {
       try {
@@ -155,8 +155,8 @@ export default {
           this.roles = response.data.data;
         });
         if (this.$route.params.id) {
-          const user = await getUser(this.$route.params.id);
-          this.editedItem = { ...user.data.data };
+          const boarding_type = await getUser(this.$route.params.id);
+          this.editedItem = { ...boarding_type.data.data };
         } else {
           this.editedItem.avatar = getRandomAvatar();
         }
@@ -168,7 +168,7 @@ export default {
     },
 
     /**
-     * Save user data
+     * Save boarding_type data
      */
     async save() {
       this.loading = true;

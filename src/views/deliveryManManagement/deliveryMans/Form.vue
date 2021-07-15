@@ -53,23 +53,6 @@
         <v-flex xs12 sm4 md4>
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-autocomplete
-                :items="roles"
-                v-model="editedItem.roleID"
-                :rules="rules.roleID"
-                label="Role"
-                class="required"
-                required
-                :readonly="isReadonly || isAdmin"
-                v-on="isReadonly || isAdmin ? on : null"
-              ></v-autocomplete>
-            </template>
-            <span>Only Admin can edit</span>
-          </v-tooltip>
-        </v-flex>
-        <v-flex xs12 sm4 md4>
-          <v-tooltip top>
-            <template v-slot:activator="{ on }">
               <v-text-field
                 v-model="editedItem.username"
                 :rules="rules.username"
@@ -172,7 +155,12 @@
       <Address :value.sync="editedItem.address" :readonly="isReadonly"></Address>
     </v-form>
     <v-layout align-end justify-center pt-4>
-      <v-btn class="secondary-color" flat round :disabled="loading" to="/users/table"
+      <v-btn
+        class="secondary-color"
+        flat
+        round
+        :disabled="loading"
+        to="/deliverymans/table"
         >Cancel</v-btn
       >
       <v-btn
@@ -191,21 +179,20 @@
 <script>
 import { newUser, updateUser, getUser } from "../../../api/userManagement/users";
 import { getRandomAvatar } from "../../../components/helpers/jsUtills/getAvatar";
-import { getRoleOptions } from "../../../api/userManagement/roles";
 import DatePicker from "../../../components/helpers/DatePicker";
 import Address from "../../../components/helpers/Address";
 export default {
   components: { DatePicker, Address },
   data() {
     return {
-      roles: [],
       editedItem: {
         firstName: "",
         lastName: "",
         username: "",
         email: "",
         password: "",
-        roleID: "",
+        isDeliveryMan: true,
+        isClient:false,
         phone: "",
         gender: "male",
         address: {
@@ -241,7 +228,6 @@ export default {
           (v) => !!v || "Password is required",
           (v) => (!!v && v.length >= 5) || "Password must have at least 4 letters",
         ],
-        roleID: [(v) => !!v || "Role is required"],
         dateOfBirth: [(v) => !!v || "Date of Birth is required"],
       },
       // =================
@@ -283,9 +269,7 @@ export default {
     async initData() {
       try {
         this.loading = true;
-        await getRoleOptions().then((response) => {
-          this.roles = response.data.data;
-        });
+
         if (this.$route.params.id) {
           const user = await getUser(this.$route.params.id);
           this.editedItem = { ...user.data.data };
@@ -315,7 +299,7 @@ export default {
             await newUser(data);
           }
           this.$snotify.success("Data saved!", "Success");
-          return this.$router.push({ name: "usersTable" });
+          return this.$router.push({ name: "deliveryManTable" });
         }
       } catch (error) {
         this.notifyErrors(error);
