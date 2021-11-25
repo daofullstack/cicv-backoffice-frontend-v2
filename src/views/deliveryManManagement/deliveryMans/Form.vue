@@ -36,7 +36,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.firstName"
-            label="First Name"
+            label="Prénom"
             class="required"
             :rules="rules.firstName"
             required
@@ -46,7 +46,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.lastName"
-            label="Last Name"
+            label="Nom"
             :readonly="isReadonly"
           ></v-text-field>
         </v-flex>
@@ -56,14 +56,14 @@
               <v-text-field
                 v-model="editedItem.username"
                 :rules="rules.username"
-                label="Username"
+                label="Nom d'utilisateur"
                 class="required"
                 required
                 :readonly="isReadonly || isAdmin"
                 v-on="isReadonly || isAdmin ? on : null"
               ></v-text-field>
             </template>
-            <span>Only Admin can edit</span>
+            <span>Seul l'administrateur peut modifier</span>
           </v-tooltip>
         </v-flex>
         <v-flex xs12 sm4 md4>
@@ -80,7 +80,7 @@
                 v-on="isReadonly || isAdmin ? on : null"
               ></v-text-field>
             </template>
-            <span>Only Admin can edit</span>
+            <span>Seul l'administrateur peut modifier</span>
           </v-tooltip>
         </v-flex>
         <v-flex xs12 sm4 md4 v-if="!$route.params.id">
@@ -91,7 +91,7 @@
                 :rules="rules.password"
                 :append-icon="showPassword ? 'visibility' : 'visibility_off'"
                 :type="showPassword ? 'text' : 'password'"
-                label="Password"
+                label="Mot de passe"
                 @click:append="isReadonly ? null : (showPassword = !showPassword)"
                 required
                 class="required"
@@ -99,7 +99,7 @@
                 v-on="isReadonly || isAdmin ? on : null"
               ></v-text-field>
             </template>
-            <span>Only Admin can edit</span>
+            <span>Seul l'administrateur peut modifier</span>
           </v-tooltip>
         </v-flex>
         <v-flex xs12 sm4 md4 v-else>
@@ -119,7 +119,7 @@
                 v-on="isReadonly || isAdmin ? on : null"
               ></v-text-field>
             </template>
-            <span>Only Admin can edit</span>
+            <span>Seul l'administrateur peut modifier</span>
           </v-tooltip>
         </v-flex>
         <v-flex xs12 sm4 md4>
@@ -129,13 +129,13 @@
             class="justify-center"
             :readonly="isReadonly"
           >
-            <v-radio label="Male" value="male" color="blue"></v-radio>
-            <v-radio label="Female" value="female" color="blue"></v-radio>
+            <v-radio label="Homme" value="male" color="blue"></v-radio>
+            <v-radio label="Femme" value="female" color="blue"></v-radio>
           </v-radio-group>
         </v-flex>
         <v-flex xs12 sm4 md4>
           <DatePicker
-            label="Date of Birth"
+            label="Date de naissance"
             :date.sync="editedItem.dateOfBirth"
             :rules="rules.dateOfBirth"
             required
@@ -146,7 +146,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.phone"
-            label="Phone"
+            label="Téléphone"
             required
             :readonly="isReadonly"
           ></v-text-field>
@@ -161,7 +161,7 @@
         round
         :disabled="loading"
         to="/deliverymans/table"
-        >Cancel</v-btn
+        >Annuler</v-btn
       >
       <v-btn
         class="primary-color-2"
@@ -170,7 +170,7 @@
         :disabled="!valid"
         @click.native="save"
         v-if="!isReadonly"
-        >Save</v-btn
+        >Enregistrer</v-btn
       >
     </v-layout>
   </v-container>
@@ -212,23 +212,23 @@ export default {
       showPassword: false,
       changePassword: false,
       rules: {
-        firstName: [(v) => !!v || "First name is required"],
+        firstName: [(v) => !!v || "Le prénom est obligatoire"],
         username: [
-          (v) => !!v || "Username is required",
-          (v) => v.length >= 4 || "Username must have at least 4 letters.",
+          (v) => !!v || "Le nom d'utilisateur",
+          (v) => v.length >= 4 || "Le nom d'utilisateur doit avoir au moins 4 lettres.",
           (v) =>
             /^([a-zA-Z0-9._])+$/.test(v) ||
-            "Character not allowed. Allowed: (a-z), (A-Z), (0-9), (.), (_)",
+            "Caractère non autorisé. Autorisé: (a-z), (A-Z), (0-9), (.), (_)",
         ],
         email: [
-          (v) => !!v || "Email is required",
-          (v) => this.isEmailValid(v) || "Email is not valid",
+          (v) => !!v || "Email obligatoire",
+          (v) => this.isEmailValid(v) || "Email non valide",
         ],
         password: [
-          (v) => !!v || "Password is required",
-          (v) => (!!v && v.length >= 5) || "Password must have at least 4 letters",
+          (v) => !!v || "Le mot de passe est obligatoire",
+          (v) => (!!v && v.length >= 5) || "Le mot de passe doit avoir au moins 4 lettres",
         ],
-        dateOfBirth: [(v) => !!v || "Date of Birth is required"],
+        dateOfBirth: [(v) => !!v || "la date de naissance est obligatoire"],
       },
       // =================
     };

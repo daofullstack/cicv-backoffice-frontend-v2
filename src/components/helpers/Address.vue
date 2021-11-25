@@ -14,7 +14,7 @@ address: {
       <v-autocomplete
         :items="countries"
         v-model="address.country"
-        label="Country"
+        label="Pays"
         :readonly="readonly"
         :rules="required ? rules : []"
       ></v-autocomplete>
@@ -23,7 +23,7 @@ address: {
       <v-autocomplete
         :items="states"
         v-model="address.state"
-        label="State"
+        label="Region"
         :loading="loadingStates"
         :readonly="readonly"
         :rules="required ? rules : []"
@@ -33,15 +33,15 @@ address: {
       <v-autocomplete
         :items="cities"
         v-model="address.city"
-        label="City"
+        label="Ville"
         :loading="loadingCities"
         :readonly="readonly"
         :rules="required ? rules : []"
       ></v-autocomplete>
     </v-flex>
     <v-flex xs12>
-      <v-textarea 
-        label="Street Name" 
+      <v-textarea
+        label="Commune/Quartier"
         v-model="address.streetName"
         :readonly="readonly"
         :rules="required ? rules : []"
@@ -62,10 +62,10 @@ export default {
       states: [],
       cities: [],
       address: {
-        country : null,
-        state : null,
-        city : null,
-        streetName : null
+        country: null,
+        state: null,
+        city: null,
+        streetName: null,
       },
       loadingStates: false,
       loadingCities: false,
@@ -79,52 +79,51 @@ export default {
       handler(val) {
         this.address = val;
       },
-      deep: true
+      deep: true,
     },
     address: {
       handler(val) {
         this.$emit("update:value", val);
       },
-      deep: true
+      deep: true,
     },
-    "address.country": function(value) {
+    "address.country": function (value) {
       this.loadingStates = true;
-      getStates(value).then(response => {
-        this.states = response.data.states.map(state => {
+      getStates(value).then((response) => {
+        this.states = response.data.states.map((state) => {
           return {
             text: state.name,
-            value: parseInt(state.id)
-          }
+            value: parseInt(state.id),
+          };
         });
         this.loadingStates = false;
       });
     },
-    "address.state": function(value) {
+    "address.state": function (value) {
       this.loadingCities = true;
-      getCities(value).then(response => {
-        this.cities = response.data.cities.map(city => {
+      getCities(value).then((response) => {
+        this.cities = response.data.cities.map((city) => {
           return {
             text: city.name,
-            value: parseInt(city.id)
-          }
+            value: parseInt(city.id),
+          };
         });
         this.loadingCities = false;
       });
-    }
+    },
   },
   methods: {
     initData() {
       getCountries()
-        .then(response => {
-          this.countries = response.data.countries.map(country => {
+        .then((response) => {
+          this.countries = response.data.countries.map((country) => {
             return { text: country.name, value: parseInt(country.id) };
           });
         })
-        .catch(error => {
+        .catch((error) => {
           this.notifyErrors(error);
         });
     },
-  }
-}
+  },
+};
 </script>
-

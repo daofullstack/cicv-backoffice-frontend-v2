@@ -6,7 +6,7 @@ const colisTypeManagement = [
   {
     path: '/colistype',
     name: 'colisType',
-    meta: { title: 'ColisType management', layout: 'admin', requiresAuth: true },
+    meta: { title: 'Gestion des types de colis', layout: 'admin', requiresAuth: true },
     component: PrincipalComponent,
     redirect: '/colistype/table',
     children: [
@@ -17,7 +17,7 @@ const colisTypeManagement = [
         component: Table,
         props: true,
         meta: {
-          title: 'Liste des ColisType',
+          title: 'Liste des Types colis',
           layout: 'admin',
           requiresAuth: true,
           requiresAccess: true
@@ -30,7 +30,7 @@ const colisTypeManagement = [
         component: Form,
         props: true,
         meta: {
-          title: 'Ajouter un colisType',
+          title: 'Ajouter un colis Type',
           type: 'add',
           layout: 'admin',
           requiresAuth: true,

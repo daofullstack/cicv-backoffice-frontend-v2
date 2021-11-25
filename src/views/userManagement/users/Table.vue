@@ -1,8 +1,8 @@
 <template>
   <div>
     <DataTable :table="table" ref="usersTable" />
-    <roles-modal 
-      ref="rolesModal" 
+    <roles-modal
+      ref="rolesModal"
       :users.sync="selectedUsers"
       :loading.sync="loading"
       :isModalOpen.sync="isModalOpen"
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapGetters} from 'vuex';
+import { mapGetters } from "vuex";
 import { updateUser } from "../../../api/userManagement/users";
 import { archiveItem, activateItem } from "../../../components/helpers/jsUtills/jsAction";
 import DataTable from "../../../components/helpers/DataTable";
@@ -26,7 +26,7 @@ export default {
        * Please open the documentation file for more info and usage.
        */
       table: {
-        title: 'Users Table',
+        title: "Liste des utilisateurs",
         toolbar: {
           archivedTableSwitcher: true,
           search: true,
@@ -34,162 +34,167 @@ export default {
           exportButtons: true,
           daterange: {
             display: false,
-            fieldName: 'createdAt'
+            fieldName: "createdAt",
           },
           filters: [
             {
-              type: 'input',
-              fieldName: 'firstName',
-              label: 'First Name',
-              value: ''
+              type: "input",
+              fieldName: "firstName",
+              label: "First Name",
+              value: "",
             },
             {
-              type: 'input',
-              fieldName: 'lastName',
-              label: 'Last Name',
-              value: ''
+              type: "input",
+              fieldName: "lastName",
+              label: "Last Name",
+              value: "",
             },
             {
-              type: 'input',
-              fieldName: 'username',
-              label: 'Username',
-              value: ''
+              type: "input",
+              fieldName: "username",
+              label: "Username",
+              value: "",
             },
             {
-              type: 'input',
-              fieldName: 'email',
-              label: 'Email',
-              value: ''
+              type: "input",
+              fieldName: "email",
+              label: "Email",
+              value: "",
             },
             {
-              type: 'select',
-              options: ['Admin', 'User', 'Guest'],
-              fieldName: 'role.name',
-              label: 'Role',
-              value: ''
-            }
+              type: "select",
+              options: ["Admin", "User", "Guest"],
+              fieldName: "role.name",
+              label: "Role",
+              value: "",
+            },
           ],
           topRightButtons: [
             {
-              text: "Add User",
+              text: "Ajouter un utilisateur",
               icon: "add",
-              isVisible: () => this.hasAccess(['write', 'admin']),
+              isVisible: () => this.hasAccess(["write", "admin"]),
               action: () => {
-                this.$router.push({ name: 'usersAdd' });
-              }
+                this.$router.push({ name: "usersAdd" });
+              },
             },
             {
               groupName: "moreActions",
-              text: "Archive Selected",
+              text: "Archive sélectionnée",
               icon: "clear_all",
-              isVisible: () => this.hasAccess(['admin']),
+              isVisible: () => this.hasAccess(["admin"]),
               action: () => {
                 this.archiveSelected();
-              }
+              },
             },
             {
               groupName: "moreActions",
-              text: "Assign Permission",
+              text: "Attribuer une autorisation",
               icon: "lock",
-              isVisible: () => this.hasAccess(['admin']),
+              isVisible: () => this.hasAccess(["admin"]),
               action: () => {
                 this.openRolesModal();
-              }
-            }
-          ]
+              },
+            },
+          ],
         },
         filters: {
-          isPending: false
+          isPending: false,
         },
         settings: {
           url: "users/table",
           isServerSide: true,
           pagination: {
-            sortBy: 'createdAt',
+            sortBy: "createdAt",
             descending: true,
-            rowsPerPage: 25
-          }
+            rowsPerPage: 25,
+          },
         },
         headers: [
-          { text: "Name", align: "left" },
-          { text: "Username" },
+          { text: "Nom", align: "left" },
+          { text: "Nom d'utilisateur" },
           { text: "Email" },
-          { text: "Role" },
-          { text: "Created At" }
+          { text: "Rôle" },
+          { text: "Crée le" },
         ],
         contents: [
           {
             data: "firstName",
             render: (data, full) => {
-              return `${data || ''} ${full.lastName || ''}`;
-            }
+              return `${data || ""} ${full.lastName || ""}`;
+            },
           },
           { data: "username" },
-          { 
+          {
             data: "email",
-            render: data => {
-              return `<button type="button" class="blue--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
+            render: (data) => {
+              return `<button type="button" class="warning--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
                     <div class="v-btn__content">${data}</div>
                   </button>`;
             },
-            getRecord: data => {
-              alert(`Column action. Get row data, email: ${data.email}`);
-            }
+            getRecord: (data) => {
+              alert(`Action de colonne. Obtenir des données de ligne, envoyer un e-mail: ${data.email}`);
+            },
           },
           { data: "role.name" },
           { data: "role.level", hideColumn: true },
           { data: "role._id", hideColumn: true },
           {
             data: "createdAt",
-            render: data => {
-              return this.timeZone(data, 'DD MMM YYYY H:mm z');
-            }
+            render: (data) => {
+              return this.timeZone(data, "DD MMM YYYY H:mm z");
+            },
           },
-          { data: "lastName", hideColumn: true }
+          { data: "lastName", hideColumn: true },
         ],
         actions: [
           {
-            text: "View or Edit",
+            text: "Afficher ou modifier",
             icon: "mdi-lead-pencil",
             color: "teal lighten-2",
-            isVisible: data => data.role.level > -1 && this.hasAccess(['read', 'write', 'admin']) && !this.isSelf(data),
-            getRecord: data => {
-              this.$router.push({ name: 'usersEdit', params: { id: data._id } });
-            }
+            isVisible: (data) =>
+              data.role.level > -1 &&
+              this.hasAccess(["read", "write", "admin"]) &&
+              !this.isSelf(data),
+            getRecord: (data) => {
+              this.$router.push({ name: "usersEdit", params: { id: data._id } });
+            },
           },
           {
-            text: "Delete Data",
+            text: "Suprimmer les données",
             icon: "delete",
             color: "red accent-2",
-            isVisible: data => data.role.level > -1 && this.hasAccess(['admin']) && !this.isSelf(data),
-            getRecord: async data => {
-              const archived = await archiveItem(this, 'users', data._id);
+            isVisible: (data) =>
+              data.role.level > -1 && this.hasAccess(["admin"]) && !this.isSelf(data),
+            getRecord: async (data) => {
+              const archived = await archiveItem(this, "users", data._id);
               if (archived) this.$refs.usersTable.refreshTable();
-            }
+            },
           },
           {
-            text: "Activate Data",
+            text: "Activer les données",
             icon: "check",
             color: "green",
             showInArchived: true,
-            isVisible: data => data.role.level > -1 && this.hasAccess(['admin']) && !this.isSelf(data),
-            getRecord: async data => {
-              const activated = await activateItem(this, 'users', data._id);
+            isVisible: (data) =>
+              data.role.level > -1 && this.hasAccess(["admin"]) && !this.isSelf(data),
+            getRecord: async (data) => {
+              const activated = await activateItem(this, "users", data._id);
               if (activated) this.$refs.usersTable.refreshTable();
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       selectedUsers: [],
       isModalOpen: false,
-      loading: false
+      loading: false,
     };
   },
   computed: {
     /**
      * Import getters helper from Vuex
      */
-    ...mapGetters({ user: 'user/profile' })
+    ...mapGetters({ user: "user/profile" }),
   },
   methods: {
     /**
@@ -203,8 +208,9 @@ export default {
      */
     openRolesModal() {
       const users = JSON.parse(JSON.stringify(this.table.selected));
-      const filtered = users.filter(user => !this.isSelf(user));
-      if (filtered.length < 1) return this.$snotify.error("Please select users other than yourself", "Error");
+      const filtered = users.filter((user) => !this.isSelf(user));
+      if (filtered.length < 1)
+        return this.$snotify.error("Veuillez sélectionner des utilisateurs autres que vous", "Erreur");
       this.selectedUsers = filtered;
       this.isModalOpen = true;
     },
@@ -213,32 +219,33 @@ export default {
      */
     async archiveSelected() {
       const users = JSON.parse(JSON.stringify(this.table.selected));
-      const filtered = users.filter(user => !this.isSelf(user));
-      if (filtered.length < 1) return this.$snotify.error("Please select users other than yourself", "Error");
+      const filtered = users.filter((user) => !this.isSelf(user));
+      if (filtered.length < 1)
+        return this.$snotify.error("Veuillez sélectionner des utilisateurs autres que vous", "Erreur");
       const del = await this.$root.$confirm(
-        "Archive?",
-        "Are you sure you want to archive selected users?",
+        "Archiver?",
+        "Voulez-vous vraiment archiver les utilisateurs sélectionnés ?",
         { color: "error lighten-1" }
       );
       try {
         if (del) {
-          this.$root.$dialogLoader.show('Please wait...', { color: 'primary' });
-          const archiveUsers = filtered.map(user => {
+          this.$root.$dialogLoader.show("Veuillez patienter svp...", { color: "primary" });
+          const archiveUsers = filtered.map((user) => {
             return updateUser({
               _id: user._id,
-              isActive: false
+              isActive: false,
             });
           });
           await Promise.all(archiveUsers);
           this.$root.$dialogLoader.hide();
           this.$refs.usersTable.refreshTable();
-          this.$snotify.success("Selected users archived", "Success");
+          this.$snotify.success("Utilisateurs sélectionnés archivés", "Succès");
         }
       } catch (error) {
-        this.$snotify.error("Failed to archive user!", "Error");
+        this.$snotify.error("Échec de l'archivage de l'utilisateur!", "Erreur");
         this.$root.$dialogLoader.hide();
       }
-    }
-  }
+    },
+  },
 };
 </script>

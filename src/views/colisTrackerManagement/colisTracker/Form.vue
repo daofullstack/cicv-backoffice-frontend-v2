@@ -5,7 +5,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.name"
-            label=" Name"
+            label=" Nom"
             class="required"
             :rules="rules.name"
             required
@@ -15,7 +15,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.trackNumber"
-            label=" trackNumber"
+            label=" Numéro de suivi"
             class="required"
             :rules="rules.trackNumber"
             required
@@ -25,7 +25,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.description"
-            label="description"
+            label="Description"
             :readonly="isReadonly"
           ></v-text-field>
         </v-flex>
@@ -34,7 +34,7 @@
             :items="status"
             v-model="editedItem.status"
             :rules="rules.status"
-            label="status"
+            label="Statut"
             class="required"
             required
             :readonly="isReadonly"
@@ -45,7 +45,7 @@
             :items="providers"
             v-model="editedItem.provider"
             :rules="rules.provider"
-            label="provider"
+            label="Fourniseur"
             class="required"
             required
             :readonly="isReadonly"
@@ -108,11 +108,11 @@ export default {
       valid: false,
       loading: false,
       rules: {
-        name: [(v) => !!v || "name is required"],
-        description: [(v) => !!v || "description is required"],
-        provider: [(v) => !!v || "provider is required"],
-        status: [(v) => !!v || "status is required"],
-        trackNumber: [(v) => !!v || "trackNumber is required"],
+        name: [(v) => !!v || "Le nom est obligatoire"],
+        description: [(v) => !!v || "La description est obligatoire"],
+        provider: [(v) => !!v || "Le fournisseur est requis"],
+        status: [(v) => !!v || "Le statut est obligatoire"],
+        trackNumber: [(v) => !!v || "Le numéro de suivi est obligatoire"],
       },
       // =================
     };
@@ -168,7 +168,7 @@ export default {
           } else {
             await createOne(data);
           }
-          this.$snotify.success("Data saved!", "Success");
+          this.$snotify.success("Données enregistrées!", "Succès");
           return this.$router.push({ name: "colisTrackerTable" });
         }
       } catch (error) {

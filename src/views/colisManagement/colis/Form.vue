@@ -7,7 +7,7 @@
             v-model="editedItem.name"
             :rules="rules.name"
             class="required"
-            label="Name"
+            label="Nom"
             required
             :readonly="isReadonly"
           ></v-text-field>
@@ -18,7 +18,7 @@
             :items="users"
             v-model="editedItem.departure_customer_ID"
             :rules="rules.departure_customer_ID"
-            label="departure_customer"
+            label="Client au départ"
             class="required"
             required
             :readonly="isReadonly"
@@ -29,7 +29,7 @@
             :items="users"
             v-model="editedItem.arrival_customer_ID"
             :rules="rules.arrival_customer_ID"
-            label="arrival_customer"
+            label="Client à l'arrivé"
             class="required"
             required
             :readonly="isReadonly"
@@ -40,8 +40,9 @@
             :items="transactions"
             v-model="editedItem.transaction_ID"
             :rules="rules.transaction_ID"
-            label="transaction"
+            label="Transaction"
             class="required"
+        
             required
             :readonly="isReadonly"
           ></v-autocomplete>
@@ -51,7 +52,7 @@
             :items="transaction_status"
             v-model="editedItem.transaction_status"
             :rules="rules.transaction_status"
-            label="transaction_status"
+            label="Statut de la transaction"
             class="required"
             required
             :readonly="isReadonly"
@@ -62,7 +63,7 @@
             :items="payment_status"
             v-model="editedItem.payment_status"
             :rules="rules.payment_status"
-            label="payment_status"
+            label="Statut du paiement"
             class="required"
             required
             :readonly="isReadonly"
@@ -71,7 +72,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.track_number"
-            label="track_number"
+            label="Numéro de suivi"
             :disabled="true"
             :readonly="isReadonly"
           ></v-text-field>
@@ -85,7 +86,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.withdrawal_code"
-            label="withdrawal_code"
+            label="Code de retrait"
             :disabled="true"
             :readonly="isReadonly"
           ></v-text-field>
@@ -93,12 +94,12 @@
         <v-flex xs12 sm4 md4>
           <v-checkbox
             v-model="editedItem.delivery"
-            :label="`delivery: ${editedItem.delivery.toString()}`"
+            :label="`Livraison: ${editedItem.delivery.toString()}`"
           ></v-checkbox>
         </v-flex>
         <v-flex xs12 sm4 md4 v-show="editedItem.delivery">
           <DatePicker
-            label="delivery_date"
+            label="La date de livraison"
             :date.sync="editedItem.delivery_date"
             :rules="rules.delivery_date"
             :readonly="isReadonly"
@@ -108,7 +109,7 @@
         </v-flex>
         <v-flex xs12 sm4 md4 v-show="editedItem.delivery">
           <TimePicker
-            label="Start Time"
+            label="Heure de début"
             :time.sync="editedItem.delivery_startTime"
             :rules="rules.timeValid"
             :max="editedItem.endTime"
@@ -116,7 +117,7 @@
             required
           />
           <TimePicker
-            label="End Time"
+            label="Heure de fin"
             :time.sync="editedItem.delivery_endTime"
             :rules="rules.timeValid"
             :min="editedItem.delivery_startTime"
@@ -138,17 +139,17 @@
       </v-layout>
     </v-form>
     <v-layout align-end justify-center pt-4>
-      <v-btn color="primary darken-1" flat round :disabled="loading" to="/colis/table"
-        >Cancel</v-btn
+      <v-btn class="secondary-color" flat round :disabled="loading" to="/colis/table"
+        >Annuler</v-btn
       >
       <v-btn
-        color="primary"
+        color="primary-color-2"
         round
         :loading="loading"
         :disabled="!valid"
         @click.native="save"
         v-if="!isReadonly"
-        >Save</v-btn
+        >Enregistrer</v-btn
       >
     </v-layout>
   </v-container>
@@ -171,7 +172,18 @@ export default {
     return {
       users: [],
       transactions: [],
-      transaction_status: ["Reçu", "emballage", "emballé", "livré", "annulé", "complet"],
+      transaction_status: [
+        "Reception de la commande",
+        "Colis reçu par l'agent  en entrepôt",
+        "Colis reçu en entrepôt",
+        "En cours d'emballage",
+        "Emballé",
+        "Embarqué",
+        "Arrivé à destination et stocké dans nos locaux",
+        "Prêt à la distriibution",
+        "livré",
+        "annulé",
+      ],
       payment_status: ["non payé", "payé à moitié", "payé"],
       editedItem: {
         name: null,
@@ -195,22 +207,22 @@ export default {
       valid: false,
       loading: false,
       rules: {
-        name: [(v) => !!v || "name is required"],
-        description: [(v) => !!v || "description is required"],
-        departure_customer: [(v) => !!v || "departure_customer is required"],
-        arrival_customer: [(v) => !!v || "arrival_customer is required"],
-        transaction_status: [(v) => !!v || "transaction_status is required"],
-        track_number: [(v) => !!v || "track_number is required"],
-        withdrawal_code: [(v) => !!v || "withdrawal_code is required"],
-        payment_status: [(v) => !!v || "payment_status is required"],
-        delivery: [(v) => !!v || "payment_status is required"],
-        delivery_place: [(v) => !!v || "delivery is required"],
-        transaction_ID: [(v) => !!v || "transaction is required"],
-        transaction_status: [(v) => !!v || "transaction_status is required"],
+        name: [(v) => !!v || "Le nom est obligatoire"],
+        description: [(v) => !!v || "La description est obligatoire"],
+        departure_customer: [(v) => !!v || "Le lieu de départ du client est obligatoire"],
+        arrival_customer: [(v) => !!v || "Le lieu d'arrivé du client est obligatoire"],
+        transaction_status: [(v) => !!v || "Le statut de la transaction est obligatoire"],
+        track_number: [(v) => !!v || "track_Le numéro de suivi est obligatoire"],
+        withdrawal_code: [(v) => !!v || "Le code de retrait est obligatoire"],
+        payment_status: [(v) => !!v || "Le statut du paiement est obligatoire"],
+        //delivery: [(v) => !!v || "payment_status is required"],
+        delivery_place: [(v) => !!v || "Le lieu de la livraison est obligatoire"],
+        transaction_ID: [(v) => !!v || "L'identifiant de la transaction est obligatoire"],
+        transaction_status: [(v) => !!v || "Le statut de la transaction est obligatoire"],
 
-        delivery_date: [(v) => !!v || "delivery_date is required if delivery is enable"],
+        delivery_date: [(v) => !!v || "La_date de la livraison est obligatoire si la livraison est activée"],
         timeValid: [
-          (v) => !!v || "delivery delivery_startTime and delivery_endTime is required",
+          (v) => !!v || "L'heure de début de la livraison et l'heure de fin de la livraison sont obligatoires",
         ],
       },
       // =================
@@ -245,8 +257,11 @@ export default {
           this.users = response.data.data;
         });
         await getTransactionOptions().then((response) => {
+           console.log(response.data.data);
           this.transactions = response.data.data;
+          
         });
+       
 
         if (this.$route.params.id) {
           const responseData = await getOne(this.$route.params.id);
@@ -276,7 +291,7 @@ export default {
           } else {
             await createOne(data);
           }
-          this.$snotify.success("Data saved!", "Success");
+          this.$snotify.success("Données enregistrées!", "Succès");
           return this.$router.push({ name: "colisTable" });
         }
       } catch (error) {

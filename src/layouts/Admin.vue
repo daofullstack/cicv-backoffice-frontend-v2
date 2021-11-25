@@ -24,21 +24,21 @@
     <v-dialog v-model="isExpired" max-width="500px" persistent scrollable>
       <v-card>
         <v-card-title>
-          <span class="headline">Session Expired</span>
+          <span class="headline">La session a expiré</span>
         </v-card-title>
         <v-card-text class="py-0">
           <v-layout row wrap>
             <v-flex xs12>
-              Your session is Expired. Please backup your changes and relogin.
+             Votre session est expirée. Veuillez sauvegarder vos modifications et vous reconnecter.
             </v-flex>
           </v-layout>
         </v-card-text>
         <v-card-actions class="pa-3">
           <v-spacer></v-spacer>
           <v-btn color="primary darken-1" flat round @click.native="toggleModal()"
-            >Close</v-btn
+            >Fermer</v-btn
           >
-          <v-btn color="primary" round :to="{ name: 'logout' }">Logout</v-btn>
+          <v-btn color="primary" round :to="{ name: 'logout' }">Se déconnecter</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

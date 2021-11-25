@@ -82,7 +82,7 @@
           round
           :disabled="loading"
           :to="{ name: 'warehousesTable' }"
-          >Cancel</v-btn
+          >Annuler</v-btn
         >
         <v-btn
           color="primary"
@@ -91,7 +91,7 @@
           :disabled="!valid"
           @click.native="save"
           v-if="!isReadonly"
-          >Save</v-btn
+          >Enregistrer</v-btn
         >
       </v-layout>
     </v-container>
@@ -115,7 +115,7 @@
             round
             :disabled="loading"
             @click.native="close"
-            >Close</v-btn
+            >Fermer</v-btn
           >
           <v-btn color="primary" round :disabled="!cropped" @click.native="setImage"
             >Ok</v-btn

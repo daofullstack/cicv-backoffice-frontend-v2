@@ -6,21 +6,21 @@
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">User Profile</span>
+          <span class="headline">Profil de l'utilisateur</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md4>
-                <v-text-field label="Legal first name*" required></v-text-field>
+                <v-text-field label="Prénom légal*" required></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
-                <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
+                <v-text-field label="Deuxième prénom légal" hint="exemple de texte d'aide uniquement sur le focus"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
                 <v-text-field
-                  label="Legal last name*"
-                  hint="example of persistent helper text"
+                  label="Nom de famille légal*"
+                  hint="exemple de texte d'aide persistant"
                   persistent-hint
                   required
                 ></v-text-field>
@@ -29,7 +29,7 @@
                 <v-text-field label="Email*" required></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field label="Password*" type="password" required></v-text-field>
+                <v-text-field label="Mot de passe*" type="password" required></v-text-field>
               </v-flex>
               <v-flex xs12 sm6>
                 <v-select
@@ -47,7 +47,7 @@
               </v-flex>
             </v-layout>
           </v-container>
-          <small>*indicates required field</small>
+          <small>*indique un champ obligatoire</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>

@@ -51,7 +51,7 @@ export default {
           ],
           topRightButtons: [
             {
-              text: "Add warehouse",
+              text: "Ajouter un entrepôt",
               icon: "add",
               isVisible: () => this.hasAccess(["write", "admin"]),
               action: () => {
@@ -60,7 +60,7 @@ export default {
             },
             {
               groupName: "moreActions",
-              text: "Archive Selected",
+              text: "Archiver les données sélectionnées",
               icon: "clear_all",
               isVisible: () => this.hasAccess(["admin"]),
               action: () => {
@@ -69,7 +69,7 @@ export default {
             },
             {
               groupName: "moreActions",
-              text: "Assign Permission",
+              text: "Attribuer une autorisation",
               icon: "lock",
               isVisible: () => this.hasAccess(["admin"]),
               action: () => {
@@ -91,11 +91,11 @@ export default {
           },
         },
         headers: [
-          { text: "Name", align: "left" },
-          { text: "location" },
-          { text: "description" },
+          { text: "Nom", align: "left" },
+          { text: "Emplacement" },
+          { text: "Description" },
 
-          { text: "Created At" },
+          { text: "Crée le" },
         ],
         contents: [
           {
@@ -117,7 +117,7 @@ export default {
         ],
         actions: [
           {
-            text: "View or Edit",
+            text: "Afficher ou modifier",
             icon: "mdi-lead-pencil",
             color: "teal lighten-2",
             isVisible: (data) =>
@@ -127,7 +127,7 @@ export default {
             },
           },
           {
-            text: "Delete Data",
+            text: "Suprimmer les données",
             icon: "delete",
             color: "red accent-2",
             isVisible: (data) => this.hasAccess(["admin"]) && !this.isSelf(data),
@@ -137,7 +137,7 @@ export default {
             },
           },
           {
-            text: "Activate Data",
+            text: "Activer les données",
             icon: "check",
             color: "green",
             showInArchived: true,
@@ -174,7 +174,7 @@ export default {
       const users = JSON.parse(JSON.stringify(this.table.selected));
       const filtered = users.filter((user) => !this.isSelf(user));
       if (filtered.length < 1)
-        return this.$snotify.error("Please select users other than yourself", "Error");
+        return this.$snotify.error("Veuillez sélectionner des utilisateurs autres que vous", "Erreur");
       this.selectedUsers = filtered;
       this.isModalOpen = true;
     },
@@ -185,15 +185,15 @@ export default {
       const users = JSON.parse(JSON.stringify(this.table.selected));
       const filtered = users.filter((user) => !this.isSelf(user));
       if (filtered.length < 1)
-        return this.$snotify.error("Please select users other than yourself", "Error");
+        return this.$snotify.error("Veuillez sélectionner des données", "Erreur");
       const del = await this.$root.$confirm(
-        "Archive?",
-        "Are you sure you want to archive selected users?",
+        "Archiver?",
+        "Êtes-vous sûr de vouloir archiver les utilisateurs sélectionnés?",
         { color: "error lighten-1" }
       );
       try {
         if (del) {
-          this.$root.$dialogLoader.show("Please wait...", { color: "primary" });
+          this.$root.$dialogLoader.show("S'il vous plaît, attendez...", { color: "primary" });
           const archiveUsers = filtered.map((user) => {
             return updateOne({
               _id: user._id,
@@ -203,10 +203,10 @@ export default {
           await Promise.all(archiveUsers);
           this.$root.$dialogLoader.hide();
           this.$refs.warehouseTable.refreshTable();
-          this.$snotify.success("Selected warehouses archived", "Success");
+          this.$snotify.success("Entrepôts sélectionnés archivés", "Succès");
         }
       } catch (error) {
-        this.$snotify.error("Failed to archive user!", "Error");
+        this.$snotify.error("Échec de l'archivage de l'utilisateur!", "Erreur");
         this.$root.$dialogLoader.hide();
       }
     },

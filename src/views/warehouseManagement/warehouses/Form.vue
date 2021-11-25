@@ -5,7 +5,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.name"
-            label=" Name"
+            label=" Nom"
             class="required"
             :rules="rules.name"
             required
@@ -16,7 +16,7 @@
           <Address
             :value.sync="editedItem.location"
             :readonly="isReadonly"
-            label="location"
+            label="Emplacement"
             class="required"
             :rules="rules.location"
             required
@@ -25,7 +25,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.description"
-            label="description"
+            label="Description"
             :readonly="isReadonly"
           ></v-text-field>
         </v-flex>
@@ -40,7 +40,7 @@
     </v-form>
     <v-layout align-end justify-center pt-4>
       <v-btn color="primary darken-1" flat round :disabled="loading" to="/warehouse/table"
-        >Cancel</v-btn
+        >Annuler</v-btn
       >
       <v-btn
         color="primary"
@@ -49,7 +49,7 @@
         :disabled="!valid"
         @click.native="save"
         v-if="!isReadonly"
-        >Save</v-btn
+        >Enregistrer</v-btn
       >
     </v-layout>
   </v-container>
@@ -83,9 +83,9 @@ export default {
       valid: false,
       loading: false,
       rules: {
-        name: [(v) => !!v || "name is required"],
-        description: [(v) => !!v || "description is required"],
-        location: [(v) => !!v || "location is required"],
+        name: [(v) => !!v || "Le nom est obligatoire"],
+        description: [(v) => !!v || "La description est obligatoire"],
+        location: [(v) => !!v || "L'emplacement est obligatoire"],
       },
 
       // =================
@@ -142,7 +142,7 @@ export default {
           } else {
             await createOne(data);
           }
-          this.$snotify.success("Data saved!", "Success");
+          this.$snotify.success("Données enregistrées!", "Succès");
           return this.$router.push({ name: "warehouseTable" });
         }
       } catch (error) {

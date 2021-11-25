@@ -2,6 +2,7 @@ const PrincipalComponent = () => import('@/views/colisManagement/Colis');
 const Table = () => import('@/views/colisManagement/colis/Table');
 const Form = () => import('@/views/colisManagement/colis/Form');
 const PendingTable = () => import('@/views/colisManagement/pendingColis/Table');
+const CompletedTable = ()=>import('@/views/colisManagement/completedColis/Table');
 
 const colisManagement = [
   {
@@ -59,6 +60,19 @@ const colisManagement = [
         props: true,
         meta: {
           title: 'En attente',
+          layout: 'admin',
+          requiresAuth: true,
+          requiresAccess: true
+        }
+      },
+      {
+        path: '/colis/completed',
+        name: 'colisCompleted',
+        parent: 'colis',
+        component: CompletedTable,
+        props: true,
+        meta: {
+          title: 'Terminé',
           layout: 'admin',
           requiresAuth: true,
           requiresAccess: true

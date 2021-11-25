@@ -26,7 +26,7 @@ const general = [
   {
     path: '/user/profile',
     name: 'userProfile',
-    meta: { title: 'User Profile', layout: 'admin', requiresAuth: true },
+    meta: { title: 'Profil de l\'utilisateur', layout: 'admin', requiresAuth: true },
     component: Profile
   },
   {

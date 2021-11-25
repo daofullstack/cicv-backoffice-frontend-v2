@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       table: {
-        title: 'Pending Users Table',
+        title: 'Liste des utilisateurs en attente',
         toolbar: {
           search: true,
           selectAll: true,
@@ -55,7 +55,7 @@ export default {
           ],
           topRightButtons: [
             {
-              text: "Activate Users",
+              text: "Activer les utilisateurs",
               icon: "check",
               isVisible: () => this.hasAccess(['admin']),
               action: () => {
@@ -77,11 +77,11 @@ export default {
           }
         },
         headers: [
-          { text: "Name", align: "left" },
-          { text: "Username" },
+          { text: "Nom", align: "left" },
+          { text: "Nom d'utilisatreur" },
           { text: "Email" },
-          { text: "Role" },
-          { text: "Created At" }
+          { text: "Rôle" },
+          { text: "Crée le" }
         ],
         contents: [
           {
@@ -99,7 +99,7 @@ export default {
                   </button>`;
             },
             getRecord: data => {
-              alert(`Column action. Get row data, email: ${data.email}`);
+              alert(`Action de colonne. Obtenir des données de ligne, envoyer un e-mail: ${data.email}`);
             }
           },
           { data: "role.name" },
@@ -114,7 +114,7 @@ export default {
         ],
         actions: [
           {
-            text: "Activate User",
+            text: "Activer l'utilisateur",
             icon: "check",
             color: "green",
             isVisible: data => data.role.level > -1 && this.hasAccess(['admin']),
@@ -134,34 +134,34 @@ export default {
         isPending: false
       };
       const activate = await this.$root.$confirm(
-        "Activate?",
-        "Are you sure you want to activate this user?",
+        "Activer?",
+        "Êtes-vous sûr de vouloir activer cet utilisateur?",
         { color: "success lighten-1" }
       );
       try {
         if (activate) {
-          this.$root.$dialogLoader.show('Please wait...', { color: 'primary' });
+          this.$root.$dialogLoader.show('Veuillez patienter svp...', { color: 'primary' });
           await updateUser(body);
           this.$root.$dialogLoader.hide();
           this.$refs.usersTable.refreshTable();
-          this.$snotify.success("User activated", "Success");
+          this.$snotify.success("Utilisateur activé", "Success");
         }
       } catch (error) {
-        this.$snotify.error("Failed to activate User!", "Error");
+        this.$snotify.error("Échec de l'activation de l'utilisateur !", "Erreur");
         this.$root.$dialogLoader.hide();
       }
     },
     async activateSelected() {
       const users = JSON.parse(JSON.stringify(this.table.selected));
-      if (users.length < 1) return this.$snotify.error("Please select Users", "Error");
+      if (users.length < 1) return this.$snotify.error("Veuillez sélectionner les utilisateurs", "Erreur");
       const activate = await this.$root.$confirm(
-        "Activate?",
-        "Are you sure you want to activate selected users?",
+        "Activer?",
+        "Êtes-vous sûr de vouloir activer les utilisateurs sélectionnés?",
         { color: "success lighten-1" }
       );
       try {
         if (activate) {
-          this.$root.$dialogLoader.show('Please wait...', { color: 'primary' });
+          this.$root.$dialogLoader.show('Veuillez patienter svp...', { color: 'primary' });
           const activateUsers = users.map(user => {
             return updateUser({
               _id: user._id,
@@ -172,10 +172,10 @@ export default {
           await Promise.all(activateUsers);
           this.$root.$dialogLoader.hide();
           this.$refs.usersTable.refreshTable();
-          this.$snotify.success("Selected users activated", "Success");
+          this.$snotify.success("Utilisateurs sélectionnés activés", "Succès");
         }
       } catch (error) {
-        this.$snotify.error("Failed to activate user!", "Error");
+        this.$snotify.error("Échec de l'activation de l'utilisateur!", "Erreur");
         this.$root.$dialogLoader.hide();
       }
     },

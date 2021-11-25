@@ -8,7 +8,7 @@ import general from './general';
 import defaultPages from './default';
 import sessions from './sessions';
 import userManagement from './userManagement';
-import userManagement2 from './userManagement2';
+import boardingTypeManagement from './boardingTypeManagement';
 import roleManagement from './roleManagement';
 import logs from './logs';
 import samplePages from './samplePages';
@@ -42,7 +42,7 @@ const routes = [
   ...uiElements,
   /** new routes */
   ...warehouses,
-  ...userManagement2,
+  ...boardingTypeManagement,
   ...transactionManagement,
   ...colisManagement,
   ...colisTypeManagement,

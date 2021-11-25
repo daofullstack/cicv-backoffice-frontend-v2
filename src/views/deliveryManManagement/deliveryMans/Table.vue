@@ -57,7 +57,7 @@ export default {
           ],
           topRightButtons: [
             {
-              text: "Add delivery man",
+              text: "Ajouter un livreur",
               icon: "add",
               isVisible: () => this.hasAccess(["write", "admin"]),
               action: () => {
@@ -66,7 +66,7 @@ export default {
             },
             {
               groupName: "moreActions",
-              text: "Archive Selected",
+              text: "Archiver les données sélectionnées",
               icon: "clear_all",
               isVisible: () => this.hasAccess(["admin"]),
               action: () => {
@@ -89,11 +89,11 @@ export default {
           },
         },
         headers: [
-          { text: "Name", align: "left" },
-          { text: "Username" },
-          { text: "Phone" },
+          { text: "Nom", align: "left" },
+          { text: "Nom d'utilisateur" },
+          { text: "Téléphone" },
           { text: "Email" },
-          { text: "Created At" },
+          { text: "Crée le" },
         ],
         contents: [
           {
@@ -107,12 +107,12 @@ export default {
           {
             data: "email",
             render: (data) => {
-              return `<button type="button" class="blue--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
+              return `<button type="button" class="warning--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
                     <div class="v-btn__content">${data}</div>
                   </button>`;
             },
             getRecord: (data) => {
-              alert(`Column action. Get row data, email: ${data.email}`);
+              alert(`Action de colonne. Obtenir des données de ligne, envoyer un e-mail: ${data.email}`);
             },
           },
           { data: "role.name" },
@@ -128,7 +128,7 @@ export default {
         ],
         actions: [
           {
-            text: "View or Edit",
+            text: "Afficher ou modifier",
             icon: "mdi-lead-pencil",
             color: "teal lighten-2",
             isVisible: (data) =>
@@ -140,7 +140,7 @@ export default {
             },
           },
           {
-            text: "Delete Data",
+            text: "Suprimmer les données",
             icon: "delete",
             color: "red accent-2",
             isVisible: (data) =>
@@ -151,7 +151,7 @@ export default {
             },
           },
           {
-            text: "Activate Data",
+            text: "Activer les données",
             icon: "check",
             color: "green",
             showInArchived: true,
@@ -189,7 +189,7 @@ export default {
       const users = JSON.parse(JSON.stringify(this.table.selected));
       const filtered = users.filter((user) => !this.isSelf(user));
       if (filtered.length < 1)
-        return this.$snotify.error("Please select users other than yourself", "Error");
+        return this.$snotify.error("Veuillez sélectionner des utilisateurs autres que vous", "Erreur");
       this.selectedUsers = filtered;
       this.isModalOpen = true;
     },
@@ -200,15 +200,15 @@ export default {
       const users = JSON.parse(JSON.stringify(this.table.selected));
       const filtered = users.filter((user) => !this.isSelf(user));
       if (filtered.length < 1)
-        return this.$snotify.error("Please select users other than yourself", "Error");
+        return this.$snotify.error("Veuillez sélectionner des utilisateurs autres que vous-même", "Erreur");
       const del = await this.$root.$confirm(
-        "Archive?",
-        "Are you sure you want to archive selected users?",
+        "Archiver?",
+        "Êtes-vous sûr de vouloir archiver les utilisateurs sélectionnés?",
         { color: "error lighten-1" }
       );
       try {
         if (del) {
-          this.$root.$dialogLoader.show("Please wait...", { color: "primary" });
+          this.$root.$dialogLoader.show("Veuillez patienter svp...", { color: "primary" });
           const archiveUsers = filtered.map((user) => {
             return updateUser({
               _id: user._id,
@@ -218,10 +218,10 @@ export default {
           await Promise.all(archiveUsers);
           this.$root.$dialogLoader.hide();
           this.$refs.deliveryManTable.refreshTable();
-          this.$snotify.success("Selected users archived", "Success");
+          this.$snotify.success("Utilisateurs sélectionnés archivés", "Success");
         }
       } catch (error) {
-        this.$snotify.error("Failed to archive user!", "Error");
+        this.$snotify.error("Échec de l'archivage de l'utilisateur!", "Error");
         this.$root.$dialogLoader.hide();
       }
     },

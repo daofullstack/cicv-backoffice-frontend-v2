@@ -86,7 +86,7 @@ export default {
     component: UsersTable,
     props: true,
     meta: {
-        title: 'Users Table',
+        title: 'Liste des utilisateurs',
         layout: 'admin',
         requiresAuth: true,
         requiresAccess: true

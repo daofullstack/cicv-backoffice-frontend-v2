@@ -1,74 +1,28 @@
 <template>
-  <DataTable :table="table" ref="usersTable2" />
+  <div>
+    <DataTable :table="table" ref="colisTable" />
+  </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { updateOne } from "../../../api/colisManagement/colis";
+import { archiveItem, activateItem } from "../../../components/helpers/jsUtills/jsAction";
 import DataTable from "../../../components/helpers/DataTable";
-import { updateUser } from "../../../api/userManagement2/users";
 
 export default {
   components: { DataTable },
   data() {
     return {
+      /**
+       * Datatable required properties.
+       * Please open the documentation file for more info and usage.
+       */
       table: {
-        title: "Pending Users 2  Table",
-        toolbar: {
-          search: true,
-          selectAll: true,
-          exportButtons: true,
-          daterange: {
-            display: false,
-            fieldName: "createdAt",
-          },
-          filters: [
-            {
-              type: "input",
-              fieldName: "firstName",
-              label: "First Name",
-              value: "",
-            },
-            {
-              type: "input",
-              fieldName: "lastName",
-              label: "Last Name",
-              value: "",
-            },
-            {
-              type: "input",
-              fieldName: "username",
-              label: "Username",
-              value: "",
-            },
-            {
-              type: "input",
-              fieldName: "email",
-              label: "Email",
-              value: "",
-            },
-            {
-              type: "select",
-              options: ["Admin", "User", "Guest"],
-              fieldName: "role.name",
-              label: "Role",
-              value: "",
-            },
-          ],
-          topRightButtons: [
-            {
-              text: "Activate Users",
-              icon: "check",
-              isVisible: () => this.hasAccess(["admin"]),
-              action: () => {
-                this.activateSelected();
-              },
-            },
-          ],
-        },
-        filters: {
-          isPending: true,
-        },
+        title: "Colis Table",
+        filters: { transaction_status: "annulé", isActive: true },
         settings: {
-          url: "users/table",
+          url: "colis/table",
           isServerSide: true,
           pagination: {
             sortBy: "createdAt",
@@ -76,106 +30,263 @@ export default {
             rowsPerPage: 25,
           },
         },
+        toolbar: {
+          archivedTableSwitcher: true,
+          search: true,
+          selectAll: true,
+          exportButtons: true,
+          daterange: {
+            display: false,
+            fieldName: "createdAt",
+          },
+          topRightButtons: [
+            {
+              text: "Ajouter Colis",
+              icon: "add",
+              isVisible: () => this.hasAccess(["write", "admin"]),
+              action: () => {
+                this.$router.push({ name: "colisAdd" });
+              },
+            },
+            {
+              groupName: "moreActions",
+              text: "Archiver les données sélectionnées",
+              icon: "clear_all",
+              isVisible: () => this.hasAccess(["admin"]),
+              action: () => {
+                this.archiveSelected();
+              },
+            },
+          ],
+          filters: [
+            {
+              type: "input",
+              fieldName: "name",
+              label: "name",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "track_number",
+              label: "track_number",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "withdrawal_code",
+              label: "withdrawal_code",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "transaction_ID",
+              label: "transaction_ID",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "payment_status",
+              label: "payment_status",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "departure_customer_ID",
+              label: "departure_customer_ID",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "arrival_customer_ID",
+              label: "arrival_customer_ID",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "transaction_status",
+              label: "transaction_status",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "delivery",
+              label: "delivery",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "delivery_place",
+              label: "delivery_place",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "delivery_date",
+              label: "delivery_date",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "delivery_startTime",
+              label: "delivery_startTime",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "delivery_endTime",
+              label: "delivery_endTime",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "description",
+              label: "description",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "isActive",
+              label: "isActive",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "createdAt",
+              label: "Created At",
+              value: "",
+            },
+          ],
+        },
+
         headers: [
-          { text: "Name", align: "left" },
-          { text: "Username" },
-          { text: "Email" },
-          { text: "Role" },
-          { text: "Created At" },
+          { text: "Nom" },
+          { text: "Numéro de suivi" },
+          { text: "Code de retrait" },
+          { text: "ID Transaction" },
+          { text: "Statut de paiement" },
+
+          { text: "ID client de départ" },
+          { text: "ID client à arrivé" },
+          { text: "Statut de la transaction" },
+          { text: "Livraison" },
+          { text: "Adresse de livraison" },
+          { text: "Date de livraison" },
+          { text: "Heure de début de la livraison" },
+          { text: "Heure de fin de la livraison" },
+          { text: "Description" },
+          { text: "Est actif" },
+          { text: "Créé le" },
         ],
         contents: [
+          { data: "name" },
+          { data: "track_number" },
+          { data: "withdrawal_code" },
+          { data: "transaction_ID" },
+          { data: "payment_status" },
+
+          { data: "departure_customer_ID" },
+          { data: "arrival_customer_ID" },
+          { data: "transaction_status" },
+          { data: "delivery" },
+          { data: "delivery_place" },
           {
-            data: "firstName",
-            render: (data, full) => {
-              return `${data} ${full.lastName || ""}`;
-            },
-          },
-          { data: "username" },
-          {
-            data: "email",
+            data: "delivery_date",
             render: (data) => {
-              return `<button type="button" class="blue--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
-                    <div class="v-btn__content">${data}</div>
-                  </button>`;
-            },
-            getRecord: (data) => {
-              alert(`Column action. Get row data, email: ${data.email}`);
+              return this.timeZone(data, "DD MMM YYYY H:mm z");
             },
           },
-          { data: "role.name" },
-          { data: "role.level", hideColumn: true },
+          { data: "delivery_startTime" },
+          { data: "delivery_endTime" },
+          { data: "description" },
+          { data: "isActive" },
           {
             data: "createdAt",
             render: (data) => {
               return this.timeZone(data, "DD MMM YYYY H:mm z");
             },
           },
-          { data: "lastName", hideColumn: true },
         ],
         actions: [
           {
-            text: "Activate User",
+            text: "Afficher ou modifier",
+            icon: "mdi-lead-pencil",
+            color: "teal lighten-2",
+            isVisible: () => this.hasAccess(["read", "write", "admin"]),
+            getRecord: (data) => {
+              this.$router.push({ name: "colisEdit", params: { id: data._id } });
+            },
+          },
+          {
+            text: "Suprimmer les données",
+            icon: "delete",
+            color: "red accent-2",
+            isVisible: (data) => this.hasAccess(["admin"]) && !this.isSelf(data),
+            getRecord: async (data) => {
+              const archived = await archiveItem(this, "colis", data._id);
+              if (archived) this.$refs.colisTable.refreshTable();
+            },
+          },
+          {
+            text: "Activer les données",
             icon: "check",
             color: "green",
-            isVisible: (data) => data.role.level > -1 && this.hasAccess(["admin"]),
+            showInArchived: true,
+            isVisible: (data) => this.hasAccess(["admin"]) && !this.isSelf(data),
             getRecord: async (data) => {
-              await this.activateUser(data._id);
+              const activated = await activateItem(this, "colis", data._id);
+              if (activated) this.$refs.colisTable.refreshTable();
             },
           },
         ],
       },
+      selectedUsers: [],
+      isModalOpen: false,
+      loading: false,
     };
   },
+  computed: {
+    /**
+     * Import getters helper from Vuex
+     */
+    ...mapGetters({ user: "user/profile" }),
+  },
   methods: {
-    async activateUser(id) {
-      const body = {
-        _id: id,
-        isActive: true,
-        isPending: false,
-      };
-      const activate = await this.$root.$confirm(
-        "Activate?",
-        "Are you sure you want to activate this user?",
-        { color: "success lighten-1" }
-      );
-      try {
-        if (activate) {
-          this.$root.$dialogLoader.show("Please wait...", { color: "primary" });
-          await updateUser(body);
-          this.$root.$dialogLoader.hide();
-          this.$refs.usersTable2.refreshTable();
-          this.$snotify.success("User activated", "Success");
-        }
-      } catch (error) {
-        this.$snotify.error("Failed to activate User!", "Error");
-        this.$root.$dialogLoader.hide();
-      }
+    /**
+     * Check if user
+     */
+    isSelf(data) {
+      return data._id == this.user._id;
     },
-    async activateSelected() {
-      const users = JSON.parse(JSON.stringify(this.table.selected));
-      if (users.length < 1) return this.$snotify.error("Please select Users", "Error");
-      const activate = await this.$root.$confirm(
-        "Activate?",
-        "Are you sure you want to activate selected users?",
-        { color: "success lighten-1" }
+
+    /**
+     * Archive selected datas
+     */
+    async archiveSelected() {
+      const datas = JSON.parse(JSON.stringify(this.table.selected));
+      const filtered = datas.filter((data) => !this.isSelf(data));
+      if (filtered.length < 1)
+        return this.$snotify.error("Veuillez sélectionner des données autres que vous-même", "Erreur");
+      const del = await this.$root.$confirm(
+        "Archiver?",
+        "Êtes-vous sûr de vouloir archiver les données sélectionnées ?",
+        { color: "error lighten-1" }
       );
       try {
-        if (activate) {
-          this.$root.$dialogLoader.show("Please wait...", { color: "primary" });
-          const activateUsers = users.map((user) => {
-            return updateUser({
-              _id: user._id,
-              isActive: true,
-              isPending: false,
+        if (del) {
+          this.$root.$dialogLoader.show("Veuillez patienter svp...", { color: "primary" });
+          const archiveUsers = filtered.map((data) => {
+            return updateOne({
+              _id: data._id,
+              isActive: false,
             });
           });
-          await Promise.all(activateUsers);
+          await Promise.all(archiveUsers);
           this.$root.$dialogLoader.hide();
-          this.$refs.usersTable2.refreshTable();
-          this.$snotify.success("Selected users activated", "Success");
+          this.$refs.colisTable.refreshTable();
+          this.$snotify.success("Données sélectionnées archivées", "Succès");
         }
       } catch (error) {
-        this.$snotify.error("Failed to activate user!", "Error");
+        this.$snotify.error("Échec de l'archivage des données!", "Erreur");
         this.$root.$dialogLoader.hide();
       }
     },

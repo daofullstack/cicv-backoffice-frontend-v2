@@ -5,7 +5,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.name"
-            label=" Name"
+            label="Nom"
             class="required"
             :rules="rules.name"
             required
@@ -15,7 +15,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.description"
-            label="description"
+            label="Description"
             :readonly="isReadonly"
           ></v-text-field>
         </v-flex>
@@ -30,7 +30,7 @@
     </v-form>
     <v-layout align-end justify-center pt-4>
       <v-btn class="secondary-color" flat round :disabled="loading" to="/colistype/table"
-        >Cancel</v-btn
+        >Annuler</v-btn
       >
       <v-btn
         class="primary-color-1"
@@ -39,7 +39,7 @@
         :disabled="!valid"
         @click.native="save"
         v-if="!isReadonly"
-        >Save</v-btn
+        >Enregistrer</v-btn
       >
     </v-layout>
   </v-container>
@@ -66,8 +66,8 @@ export default {
       valid: false,
       loading: false,
       rules: {
-        name: [(v) => !!v || "name is required"],
-        description: [(v) => !!v || "description is required"],
+        name: [(v) => !!v || "Le nom est obligatoire"],
+        description: [(v) => !!v || "La description est obligatoire"],
       },
       // =================
     };
@@ -123,7 +123,7 @@ export default {
           } else {
             await createOne(data);
           }
-          this.$snotify.success("Data saved!", "Success");
+          this.$snotify.success("Données enregistrées!", "Success");
           return this.$router.push({ name: "colisTypeTable" });
         }
       } catch (error) {

@@ -6,7 +6,7 @@
           <v-card-text>
             <v-layout row mt-4 mb-4>
               <v-flex xs12>
-                <h2 class="text-xs-center primary-color">Register</h2>
+                <h2 class="text-xs-center primary-color">S'inscrire</h2>
               </v-flex>
             </v-layout>
 
@@ -22,7 +22,7 @@
                 prepend-icon="contacts"
                 v-model="registerData.firstName"
                 :rules="rules.firstName"
-                label="First Name"
+                label="Prénom"
                 required
               ></v-text-field>
               <v-text-field
@@ -38,7 +38,7 @@
                 class="pl-4 pr-4"
                 prepend-icon="person"
                 name="username"
-                label="Username"
+                label="Nom d'utilisateur"
                 v-model="registerData.username"
                 :rules="rules.username"
                 required
@@ -48,7 +48,7 @@
                 class="pl-4 pr-4"
                 prepend-icon="lock"
                 name="password"
-                label="Password"
+                label="Mot de passe"
                 type="password"
                 v-model="registerData.password"
                 :rules="rules.password"
@@ -67,12 +67,12 @@
                     color="primary"
                     type="submit"
                     form="registerForm"
-                  >Submit</v-btn>
+                  >Valider</v-btn>
                 </div>
               </v-flex>
               <v-flex xs12>
                 <div class="text-xs-center pt-3">
-                  <router-link :to="{name: 'login'}">Back to login</router-link>
+                  <router-link :to="{name: 'login'}">Retour connexion</router-link>
                 </div>
               </v-flex>
             </v-layout>
@@ -98,17 +98,17 @@ export default {
         avatar: getRandomAvatar()
       },
       rules: {
-        firstName: [v => !!v || "First name is required"],
+        firstName: [v => !!v || "Le prénom est obligatoire"],
         username: [
-          v => !!v || "Username is required",
-          v => v.length >= 4 || "Username must have at least 4 letters.",
-          v => /^([a-zA-Z0-9._])+$/.test(v) || "Character not allowed. Allowed: (a-z), (A-Z), (0-9), (.), (_)"
+          v => !!v || "Le nom utilisateur est obligatoire",
+          v => v.length >= 4 || "Le nom d'utilisateur doit avoir au moins 4 lettres.",
+          v => /^([a-zA-Z0-9._])+$/.test(v) || "Caractère non autorisé. Autorisé: (a-z), (A-Z), (0-9), (.), (_)"
         ],
         email: [
-          v => !!v || "Email is required",
-          v => this.isEmailValid(v) || "Email is not valid"
+          v => !!v || "Email obligatoire",
+          v => this.isEmailValid(v) || "Email non valide"
         ],
-        password: [v => !!v || "Password is required"]
+        password: [v => !!v || "Mot de passe obligatoire"]
       },
       valid: false,
       loadingBtn: false
@@ -124,7 +124,7 @@ export default {
         if (this.$refs.form.validate()) {
           this.loadingBtn = true;
           await registerUser(this.registerData);
-          this.$snotify.success(`Please check your email then activate your account`, "Success");
+          this.$snotify.success(`Veuillez vérifier votre email puis activer votre compte`, "Success");
           this.$router.push({ name: "login" });
         }
       } catch (error) {

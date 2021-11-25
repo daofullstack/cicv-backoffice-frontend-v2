@@ -9,6 +9,8 @@ const MY_PROFILE_IMAGE_URL = `users/my-profile/image`;
 
 /******* other */
 const GET_USERS_OPTIONS_URL = `roles/options2`;
+const GET_TCHAT_USERS_URL = `roles/tchatusers`;
+
 
 export function getUsers(data) {
   return http().post(GET_USERS_URL, data);
@@ -43,4 +45,11 @@ export function updateMyProfileImage(data) {
 
 export function getUserOptions() {
   return http().get(GET_USERS_OPTIONS_URL);
+}
+
+
+
+
+export function getTchatUsers(){
+  return http().get(GET_TCHAT_USERS_URL);
 }

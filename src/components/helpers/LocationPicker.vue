@@ -18,26 +18,26 @@
     ></v-text-field>
     <v-chip v-else color="green" :class="className" text-color="white" small @click="viewLocation">
       <v-avatar class="green darken-4"><v-icon>map</v-icon></v-avatar>
-      View on Map
+     Voir sur la carte
     </v-chip>
 
     <v-dialog v-model="dialogFull" fullscreen hide-overlay transition="dialog-bottom-transition">
       <v-card>
-        <v-toolbar dark color="primary">
+        <v-toolbar dark color="warning">
           <v-btn icon dark @click="dialogFull = false">
-            <v-icon>close</v-icon>
+            <v-icon>Fermer</v-icon>
           </v-btn>
-          <v-toolbar-title>{{ viewOnly ? "View Location" : "Set Location"}}</v-toolbar-title>
+          <v-toolbar-title>{{ viewOnly ? "Voir l'emplacement" : "Définir l'emplacement"}}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items v-if="readonly === undefined && !viewOnly">
-            <v-btn dark flat @click="save()">Save</v-btn>
+            <v-btn dark flat @click="save()">Enregistrer</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-card-text>
           <v-container fluid grid-list-md pt-0 px-0 v-if="readonly === undefined && !viewOnly">
             <v-layout row wrap>
               <v-flex xs12 sm3>
-                <v-label>Area</v-label>
+                <v-label>Zone</v-label>
                 <gmap-autocomplete
                   class="pa-2 locPicker-input"
                   @place_changed="setPlace"
@@ -45,18 +45,18 @@
                 </gmap-autocomplete>
               </v-flex>
               <v-flex xs12 sm3 v-if="radius">
-                <label class="locPicker-label">Radius (Km)</label>
+                <label class="locPicker-label">Rayon (Km)</label>
                 <input 
                   type="number" 
                   min="0.001" 
                   class="pa-2 locPicker-input" 
-                  placeholder="Radius (Km)"
+                  placeholder="Rayon (Km)"
                   v-model.number="radius" />
               </v-flex>
               <v-flex xs12 sm3>
                 <label class="d-block">&nbsp;</label>
                 <v-btn 
-                  color="primary" 
+                  color="warning" 
                   dark 
                   class="mb-2" 
                   depressed

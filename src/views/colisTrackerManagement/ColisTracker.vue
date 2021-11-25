@@ -1,13 +1,8 @@
 <template>
   <div class="page-layout">
     <g-breadcrumbs :items="breadcrumbs" />
-    <v-tabs class="g-tabs" slider-color="primary">
-      <v-tab :to="{ name: 'colisTrackerTable' }">Colis</v-tab>
-      <v-tab
-        v-if="hasPermission('colisTrackerPending')"
-        :to="{ name: 'colisTrackerPending' }"
-        >Colis Tracker en attente</v-tab
-      >
+    <v-tabs class="g-tabs" slider-color="secondary">
+      <v-tab :to="{ name: 'colisTrackerTable' }">Traçage de colis</v-tab>
     </v-tabs>
     <router-view></router-view>
   </div>
@@ -20,12 +15,12 @@ export default {
       // Breadcrumbs
       breadcrumbs: [
         {
-          text: "Dashboard",
+          text: "Tableau de bord",
           disabled: false,
           href: "#",
         },
         {
-          text: "Colis Tracker",
+          text: "Traçage de colis",
           disabled: true,
           href: "#",
         },

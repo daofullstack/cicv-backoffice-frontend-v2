@@ -12,20 +12,20 @@ export default {
       // Breadcrumbs
       breadcrumbs: [
         {
-          text: "Dashboard",
+          text: "Tableau de bord",
           disabled: false,
-          href: "#"
+          href: "#",
         },
         {
           text: "Roles",
           disabled: false,
-          href: "#"
-        }
-      ]
+          href: "#",
+        },
+      ],
       // =================
     };
   },
   mounted() {},
-  methods: {}
+  methods: {},
 };
 </script>

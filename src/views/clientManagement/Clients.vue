@@ -1,8 +1,8 @@
 <template>
   <div class="page-layout">
     <g-breadcrumbs :items="breadcrumbs" />
-    <v-tabs class="g-tabs" slider-color="primary">
-      <v-tab :to="{ name: 'clientTable' }">client</v-tab>
+    <v-tabs class="g-tabs" slider-color="secondary">
+      <v-tab :to="{ name: 'clientTable' }">Clients</v-tab>
     </v-tabs>
     <router-view></router-view>
   </div>
@@ -15,12 +15,12 @@ export default {
       // Breadcrumbs
       breadcrumbs: [
         {
-          text: "Dashboard",
+          text: "Tableau de bord",
           disabled: false,
           href: "#",
         },
         {
-          text: "client",
+          text: "Clients",
           disabled: true,
           href: "#",
         },

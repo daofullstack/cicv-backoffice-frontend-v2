@@ -6,7 +6,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { updateUser } from "../../../api/userManagement2/users";
+import { updateOne } from "../../../api/colisTrackerManagement/colis_tracker";
 import { archiveItem, activateItem } from "../../../components/helpers/jsUtills/jsAction";
 import DataTable from "../../../components/helpers/DataTable";
 
@@ -19,7 +19,17 @@ export default {
        * Please open the documentation file for more info and usage.
        */
       table: {
-        title: "ColisTracker Table",
+        title: "Liste des types de colis",
+        filters: {},
+        settings: {
+          url: "colistracker/table",
+          isServerSide: true,
+          pagination: {
+            sortBy: "createdAt",
+            descending: true,
+            rowsPerPage: 25,
+          },
+        },
         toolbar: {
           archivedTableSwitcher: true,
           search: true,
@@ -29,46 +39,13 @@ export default {
             display: false,
             fieldName: "createdAt",
           },
-          filters: [
-            {
-              type: "input",
-              fieldName: "firstName",
-              label: "First Name",
-              value: "",
-            },
-            {
-              type: "input",
-              fieldName: "lastName",
-              label: "Last Name",
-              value: "",
-            },
-            {
-              type: "input",
-              fieldName: "username",
-              label: "Username",
-              value: "",
-            },
-            {
-              type: "input",
-              fieldName: "email",
-              label: "Email",
-              value: "",
-            },
-            {
-              type: "select",
-              options: ["Admin", "User", "Guest"],
-              fieldName: "role.name",
-              label: "Role",
-              value: "",
-            },
-          ],
           topRightButtons: [
             {
-              text: "Add ColisTracker",
+              text: "Ajouter type de Colis",
               icon: "add",
               isVisible: () => this.hasAccess(["write", "admin"]),
               action: () => {
-                this.$router.push({ name: "colisTrackerAdd" });
+                this.$router.push({ name: "colisTypeAdd" });
               },
             },
             {
@@ -80,99 +57,102 @@ export default {
                 this.archiveSelected();
               },
             },
+          ],
+          filters: [
             {
-              groupName: "moreActions",
-              text: "Assign Permission",
-              icon: "lock",
-              isVisible: () => this.hasAccess(["admin"]),
-              action: () => {
-                this.openRolesModal();
-              },
+              type: "trackNumber",
+              fieldName: "name",
+              label: "name",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "name",
+              label: "name",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "description",
+              label: "description",
+              value: "",
+            },
+
+            {
+              type: "input",
+              fieldName: "status",
+              label: "status",
+              value: "",
+            },
+
+            {
+              type: "input",
+              fieldName: "provider",
+              label: "provider",
+              value: "",
+            },
+            {
+              type: "input",
+              fieldName: "isActive",
+              label: "isActive",
+              value: "",
             },
           ],
         },
-        filters: {
-          isPending: false,
-        },
-        settings: {
-          url: "colistype/table",
-          isServerSide: true,
-          pagination: {
-            sortBy: "createdAt",
-            descending: true,
-            rowsPerPage: 25,
-          },
-        },
+
         headers: [
-          { text: "Name", align: "left" },
-          { text: "Username" },
-          { text: "Email" },
-          { text: "Role" },
-          { text: "Created At" },
+          { text: "N° de colis" },
+          { text: "Nom", align: "left" },
+          { text: "Description" },
+          { text: "Status" },
+          { text: "Fournisseur" },
+          { text: "Crée le" },
         ],
         contents: [
+          { data: "trackNumber" },
           {
-            data: "firstName",
-            render: (data, full) => {
-              return `${data || ""} ${full.lastName || ""}`;
-            },
+            data: "name",
           },
-          { data: "username" },
-          {
-            data: "email",
-            render: (data) => {
-              return `<button type="button" class="blue--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
-                    <div class="v-btn__content">${data}</div>
-                  </button>`;
-            },
-            getRecord: (data) => {
-              alert(`Column action. Get row data, email: ${data.email}`);
-            },
-          },
-          { data: "role.name" },
-          { data: "role.level", hideColumn: true },
-          { data: "role._id", hideColumn: true },
+          { data: "description" },
+
+          { data: "status" },
+
+          { data: "provider" },
           {
             data: "createdAt",
             render: (data) => {
               return this.timeZone(data, "DD MMM YYYY H:mm z");
             },
           },
-          { data: "lastName", hideColumn: true },
         ],
         actions: [
           {
-            text: "View or Edit",
+            text: "Afficher ou modifier",
             icon: "mdi-lead-pencil",
             color: "teal lighten-2",
-            isVisible: (data) =>
-              data.role.level > -1 &&
-              this.hasAccess(["read", "write", "admin"]) &&
-              !this.isSelf(data),
+            isVisible: () => this.hasAccess(["read", "write", "admin"]),
             getRecord: (data) => {
-              this.$router.push({ name: "colisTrackerEdit", params: { id: data._id } });
+              this.$router.push({ name: "colisTypeEdit", params: { id: data._id } });
             },
           },
           {
-            text: "Delete Data",
+            text: "Suprimmer les données",
             icon: "delete",
             color: "red accent-2",
-            isVisible: (data) =>
-              data.role.level > -1 && this.hasAccess(["admin"]) && !this.isSelf(data),
+            isVisible: (data) => this.hasAccess(["admin"]) && !this.isSelf(data),
             getRecord: async (data) => {
-              const archived = await archiveItem(this, "users", data._id);
+              const archived = await archiveItem(this, "colistype", data._id);
               if (archived) this.$refs.colisTrackerTable.refreshTable();
             },
           },
           {
-            text: "Activate Data",
+            text: "Activer les données",
             icon: "check",
             color: "green",
             showInArchived: true,
-            isVisible: (data) =>
-              data.role.level > -1 && this.hasAccess(["admin"]) && !this.isSelf(data),
+            isVisible: (data) => this.hasAccess(["admin"]) && !this.isSelf(data),
             getRecord: async (data) => {
-              const activated = await activateItem(this, "users", data._id);
+              const activated = await activateItem(this, "colistype", data._id);
               if (activated) this.$refs.colisTrackerTable.refreshTable();
             },
           },
@@ -196,46 +176,36 @@ export default {
     isSelf(data) {
       return data._id == this.user._id;
     },
+
     /**
-     * Open roles modal and send selected users to roles modal component
-     */
-    openRolesModal() {
-      const users = JSON.parse(JSON.stringify(this.table.selected));
-      const filtered = users.filter((user) => !this.isSelf(user));
-      if (filtered.length < 1)
-        return this.$snotify.error("Please select users other than yourself", "Error");
-      this.selectedUsers = filtered;
-      this.isModalOpen = true;
-    },
-    /**
-     * Archive selected users
+     * Archive selected datas
      */
     async archiveSelected() {
-      const users = JSON.parse(JSON.stringify(this.table.selected));
-      const filtered = users.filter((user) => !this.isSelf(user));
+      const datas = JSON.parse(JSON.stringify(this.table.selected));
+      const filtered = datas.filter((data) => !this.isSelf(data));
       if (filtered.length < 1)
-        return this.$snotify.error("Please select users other than yourself", "Error");
+        return this.$snotify.error("Veuillez sélectionner des données autres que vous-même", "Erreur");
       const del = await this.$root.$confirm(
-        "Archive?",
-        "Are you sure you want to archive selected users?",
+        "Archiver?",
+        "Êtes-vous sûr de vouloir archiver les données sélectionnées?",
         { color: "error lighten-1" }
       );
       try {
         if (del) {
-          this.$root.$dialogLoader.show("Please wait...", { color: "primary" });
-          const archiveUsers = filtered.map((user) => {
-            return updateUser({
-              _id: user._id,
+          this.$root.$dialogLoader.show("Veuillez patienter svp...", { color: "primary" });
+          const archiveUsers = filtered.map((data) => {
+            return updateOne({
+              _id: data._id,
               isActive: false,
             });
           });
           await Promise.all(archiveUsers);
           this.$root.$dialogLoader.hide();
           this.$refs.colisTrackerTable.refreshTable();
-          this.$snotify.success("Selected users archived", "Success");
+          this.$snotify.success("Données sélectionnées archivées", "Succès");
         }
       } catch (error) {
-        this.$snotify.error("Failed to archive user!", "Error");
+        this.$snotify.error("Échec de l'archivage des données !", "Erreur");
         this.$root.$dialogLoader.hide();
       }
     },

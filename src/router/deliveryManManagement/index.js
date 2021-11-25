@@ -17,7 +17,7 @@ const userManagement = [
         component: UsersTable,
         props: true,
         meta: {
-          title: 'deliverymans Table',
+          title: 'Liste des livreurs',
           layout: 'admin',
           requiresAuth: true,
           requiresAccess: true
@@ -30,7 +30,7 @@ const userManagement = [
         component: UsersForm,
         props: true,
         meta: {
-          title: 'Add deliveryMan',
+          title: 'Ajouter un livreur',
           type: 'add',
           layout: 'admin',
           requiresAuth: true,

@@ -17,7 +17,7 @@ const transactionManagement = [
         component: Table,
         props: true,
         meta: {
-          title: 'Liste des Transactions',
+          title: 'Liste des Envois',
           layout: 'admin',
           requiresAuth: true,
           requiresAccess: true
@@ -30,7 +30,7 @@ const transactionManagement = [
         component: Form,
         props: true,
         meta: {
-          title: 'Ajouter une transaction',
+          title: 'Ajouter un Envoi',
           type: 'add',
           layout: 'admin',
           requiresAuth: true,

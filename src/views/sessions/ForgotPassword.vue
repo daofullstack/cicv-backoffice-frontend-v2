@@ -6,7 +6,7 @@
           <v-card-text>
             <v-layout row mt-4 mb-4>
               <v-flex xs12>
-                <h2 class="text-xs-center primary-color">Forgot Password</h2>
+                <h2 class="text-xs-center primary-color">Mot de passe oublier</h2>
               </v-flex>
             </v-layout>
 
@@ -39,12 +39,12 @@
                     color="primary"
                     type="submit"
                     form="forgotPasswordForm"
-                  >Reset my Password</v-btn>
+                  >Réinitialiser mon mot de passe</v-btn>
                 </div>
               </v-flex>
               <v-flex xs12>
                 <div class="text-xs-center pt-3">
-                  <router-link :to="{name: 'login'}">Back to login</router-link>
+                  <router-link :to="{name: 'login'}">Retour connexion</router-link>
                 </div>
               </v-flex>
             </v-layout>
@@ -64,8 +64,8 @@ export default {
       email: null,
       rules: {
         email: [
-          v => !!v || "Email is required",
-          v => this.isEmailValid(v) || "Email is not valid"
+          v => !!v || "Email obligatoire",
+          v => this.isEmailValid(v) || "Email non valide"
         ]
       },
       valid: false,
@@ -82,7 +82,7 @@ export default {
         if (this.$refs.form.validate()) {
           this.loadingBtn = true;
           await forgotPassword({email: this.email});
-          this.$snotify.success(`Please check your email then reset your password`, "Success");
+          this.$snotify.success(`Veuillez vérifier votre courrier électronique puis réinitialiser votre mot de passe`, "Success");
           this.$router.push({ name: "login" });
         }
       } catch (error) {

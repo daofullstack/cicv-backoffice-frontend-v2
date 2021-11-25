@@ -14,49 +14,60 @@ uiElementsData.forEach(ui => {
 
 const menuItems = [
   { 
-    heading: "Main", 
+    heading: "Principal", 
     names: [
       "dashboard", 
-      "usersTable", 
-      "usersTable2", 
-      "transactionsTable", 
-      "colisTable",
-      "colisTypeTable",
-      "warehouseTable",
-      "deliveryManTable",
-      "clientTable",
-      "agentTable",
-      "colisTrackerTable",
-      "rolesTable", 
       "siteConfigurations", 
       "accountLogs"
     ] 
   },
-  { icon: "dashboard", text: "Dashboard", name: "dashboard" },
-  { icon: "group", text: "User Management", name: "usersTable" },
-  { icon: "event", text: "transaction management", name: "transactionsTable" },
-  { icon: "add_shopping_cart", text: "colis management", name: "colisTable" },
-  { icon: "list", text: "colis type management", name: "colisTypeTable" },
-  { icon: "store", text: "warehouse management", name: "warehouseTable" },
-  { icon: "receipt", text: "delivery Man management", name: "deliveryManTable" },
-  { icon: "perm_identity", text: "client management", name: "clientTable" },
-  { icon: "view_list", text: "agent management", name: "agentTable" },
-  { icon: "menu", text: "colisTracker management", name: "colisTrackerTable" },
-  { icon: "list", text: "Boarding type Management", name: "usersTable2" },
-  { icon: "lock", text: "Roles and Permissions", name: "rolesTable" },
-  { icon: "settings", text: "Site Configurations", name: "siteConfigurations" },
-  { icon: "update", text: "Account Logs", name: "accountLogs" },
+  { icon: "dashboard", text: "Tableau de bord", name: "dashboard" },
+  { icon: "settings", text: "Configurations du site", name: "siteConfigurations" },
+  { icon: "update", text: "Logs", name: "accountLogs" },
+  { 
+    heading: "Metier", 
+    names: [
+      "boardingTypesTable", 
+      "transactionsTable", 
+      "colisTable",
+      "colisTypeTable",
+      "warehouseTable",
+      "colisTrackerTable",
+
+    ] 
+  },
+  { icon: "list", text: "Type d'embarquement", name: "boardingTypesTable" },
+  { icon: "event", text: "Envois", name: "transactionsTable" },
+  { icon: "add_shopping_cart", text: "colis", name: "colisTable" },
+  { icon: "list", text: "type de colis", name: "colisTypeTable" },
+  { icon: "store", text: "Entrepôt", name: "warehouseTable" },
+  { icon: "menu", text: "traçage de colis externe", name: "colisTrackerTable" },
+  { 
+    heading: "Utilisateur", 
+    names: [
+      "usersTable", 
+      "deliveryManTable",
+      "clientTable",
+      "agentTable",
+      "rolesTable", 
+    ] 
+  },
+  { icon: "group", text: "Tous les Users", name: "usersTable" },
+  { icon: "receipt", text: "Livreur", name: "deliveryManTable" },
+  { icon: "perm_identity", text: "Client", name: "clientTable" },
+  { icon: "view_list", text: "Agent", name: "agentTable" },
+  { icon: "lock", text: "Roles et Permissions", name: "rolesTable" },
+ 
   { 
     heading: "Sample Pages", 
     names: [
       "feedsTable", 
       "assetsTable",
-      "warehousesTable"
     ] 
   },
   { icon: "pages", text: "Feeds", name: "feedsTable" },
   { icon: "cloud_upload", text: "File Uploads", name: "assetsTable" },
-  { icon: "pages", text: "Warehouses Table", name: "warehousesTable" },
+
   { 
     heading: "Documentation", 
     names: [

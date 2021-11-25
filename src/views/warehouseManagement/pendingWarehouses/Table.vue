@@ -4,7 +4,7 @@
 
 <script>
 import DataTable from "../../../components/helpers/DataTable";
-import { updateUser } from "../../../api/userManagement2/users";
+import { updateOne } from "../../../api/warehouseManagement/warehouses";
 
 export default {
   components: { DataTable },
@@ -94,7 +94,7 @@ export default {
           {
             data: "email",
             render: (data) => {
-              return `<button type="button" class="blue--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
+              return `<button type="button" class="warning--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
                     <div class="v-btn__content">${data}</div>
                   </button>`;
             },

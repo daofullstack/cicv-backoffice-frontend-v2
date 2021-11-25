@@ -62,8 +62,8 @@
               <h3 class="headline mb-2">
                 {{ selected.name }}
               </h3>
-              <div class="blue--text mb-2">{{ selected.email }}</div>
-              <div class="blue--text subheading font-weight-bold">{{ selected.username }}</div>
+              <div class="warning--text mb-2">{{ selected.email }}</div>
+              <div class="warning--text subheading font-weight-bold">{{ selected.username }}</div>
             </v-card-text>
             <v-divider></v-divider>
             <v-layout

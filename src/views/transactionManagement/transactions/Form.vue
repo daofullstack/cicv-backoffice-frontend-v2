@@ -4,7 +4,7 @@
       <v-layout row wrap>
         <v-flex xs12 sm4 md4>
           <DatePicker
-            label="departure date"
+            label="Date de depart"
             :date.sync="editedItem.departure_date"
             :rules="rules.departure_date"
             required
@@ -14,7 +14,7 @@
         </v-flex>
         <v-flex xs12 sm4 md4>
           <DatePicker
-            label="arrival date"
+            label="Date d'arrivée"
             :date.sync="editedItem.arrival_date"
             :rules="rules.arrival_date"
             required
@@ -35,20 +35,20 @@
         </v-flex>
       </v-layout>
 
-      <b><div>departure Info</div></b
+      <b><div>depart Info</div></b
       ><Address
         :value.sync="editedItem.departure_place"
         :readonly="isReadonly"
-        label="departure_place"
+        label="lieu de depart"
         class="required"
         :rules="rules.departure_place"
         required
       ></Address>
-      <b><div>Arrival Info</div></b>
+      <b><div>Arrivée Info</div></b>
       <Address
         :value.sync="editedItem.arrival_place"
         :readonly="isReadonly"
-        label="arrival_place"
+        label="lieu d'arrivée"
         class="required"
         :rules="rules.arrival_place"
         required
@@ -56,21 +56,21 @@
     </v-form>
     <v-layout align-end justify-center pt-4>
       <v-btn
-        color="primary darken-1"
+        class="secondary-color"
         flat
         round
         :disabled="loading"
         to="/transaction/table"
-        >Cancel</v-btn
+        >Annuler</v-btn
       >
       <v-btn
-        color="primary"
+        class="primary-color-2"
         round
         :loading="loading"
         :disabled="!valid"
         @click.native="save"
         v-if="!isReadonly"
-        >Save</v-btn
+        >Enregistrer</v-btn
       >
     </v-layout>
   </v-container>

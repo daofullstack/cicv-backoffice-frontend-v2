@@ -27,12 +27,12 @@ export default {
       // Breadcrumbs
       breadcrumbs: [
         {
-          text: "Dashboard",
+          text: "Tableau de bord",
           disabled: false,
           href: "/"
         },
         {
-          text: "Profile",
+          text: "Profil",
           disabled: true,
           href: "#"
         }

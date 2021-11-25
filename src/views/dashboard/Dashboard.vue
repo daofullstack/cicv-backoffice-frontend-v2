@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-lg fluid>
     <v-layout align-center row wrap justify-center class="card-dashboard-container mb-3">
-      <v-flex xs12 sm3 v-for="(card, i) in cards" :key="i">
+      <v-flex xs12 sm6 v-for="(card, i) in cards" :key="i">
         <v-card class="mx-auto elevation-soft-grey" max-width="400">
           <v-card-text class="font-weight-bold">
             <v-layout row>
@@ -25,7 +25,7 @@
           <v-card-title class="pb-0">
             <div>
               <div class="subheading grey--text text--darken-2">
-                Hello, {{ user.firstName || '' }} {{ user.lastName || '' }}
+                Salut, {{ user.firstName || '' }} {{ user.lastName || '' }}
               </div>
               <div class="headline">{{ $moment().format("dddd, Do") }}</div>
               <div class="grey--text text--darken-2">{{ $moment().format("MMMM YYYY") }}</div>
@@ -103,32 +103,32 @@ export default {
       cards: [
         {
           key: "box-1",
-          title: "Active Users",
+          title: "Utilisateurs actifs",
           icon: "mdi-account-group-outline",
           data: 0,
           color: "secondary"
         },
         {
           key: "box-2",
-          title: "Active Roles",
+          title: "Rôles actifs",
           icon: "mdi-account-lock-outline",
           data: 0,
-          color: "teal accent-3"
+          color: "warning"
         },
-        {
-          key: "box-3",
-          title: "Active Feeds",
-          icon: "mdi-text-box-outline",
-          data: 0,
-          color: "deep-purple accent-2"
-        },
-        {
-          key: "box-4",
-          title: "Total Files",
-          icon: "mdi-file-multiple-outline",
-          data: 0,
-          color: "blue accent-2"
-        },
+        // {
+        //   key: "box-3",
+        //   title: "Active Feeds",
+        //   icon: "mdi-text-box-outline",
+        //   data: 0,
+        //   color: "deep-purple accent-2"
+        // },
+        // {
+        //   key: "box-4",
+        //   title: "Total Files",
+        //   icon: "mdi-file-multiple-outline",
+        //   data: 0,
+        //   color: "blue accent-2"
+        // },
       ],
       loginUsers: [{ header: 'Recent Login' }],
       users: {

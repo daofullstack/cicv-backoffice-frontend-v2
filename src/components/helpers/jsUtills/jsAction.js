@@ -13,16 +13,16 @@ export async function archiveItem(component, url, id) {
     isActive: false
   };
   const del = await component.$root.$confirm(
-    "Archive?",
-    "Are you sure you want to archive this data?",
+    "Archiver?",
+    "Êtes-vous sûr de vouloir archiver ces données ?",
     { color: "error lighten-1" }
   );
   try {
     if (del) {
-      component.$root.$dialogLoader.show('Please wait...', { color: 'primary' });
+      component.$root.$dialogLoader.show('Veuillez patienter svp...', { color: 'primary' });
       await updateRowTable(url, body);
       component.$root.$dialogLoader.hide();
-      component.$snotify.success("Data archived", "Success");
+      component.$snotify.success("Suppression effectuée", "Success");
     }
     return del;
   } catch (error) {
@@ -46,16 +46,16 @@ export async function activateItem(component, url, id) {
     isActive: true
   };
   const activate = await component.$root.$confirm(
-    "Activate?",
-    "Are you sure you want to activate this data?",
+    "Activer?",
+    "Êtes-vous sûr de vouloir activer ces données ?",
     { color: "success lighten-1" }
   );
   try {
     if (activate) {
-      component.$root.$dialogLoader.show('Please wait...', { color: 'primary' });
+      component.$root.$dialogLoader.show('Veuillez patienter svp...', { color: 'primary' });
       await updateRowTable(url, body);
       component.$root.$dialogLoader.hide();
-      component.$snotify.success("Data activated", "Success");
+      component.$snotify.success("Données activées", "Success");
     }
     return activate;
   } catch (error) {
@@ -76,16 +76,16 @@ export async function activateItem(component, url, id) {
 export async function deleteItem(component, url, id) {
   const deleteUrl = url + '/' + id;
   const del = await component.$root.$confirm(
-    "Delete?",
-    "Are you sure you want to delete this data?",
+    "Supprimer?",
+    "Êtes-vous sûr de vouloir supprimer ces données ?",
     { color: "error lighten-1" }
   );
   try {
     if (del) {
-      component.$root.$dialogLoader.show('Please wait...', { color: 'primary' });
+      component.$root.$dialogLoader.show('Veuillez patienter...', { color: 'primary-color' });
       await deleteRowTable(deleteUrl);
       component.$root.$dialogLoader.hide();
-      component.$snotify.success("Data deleted", "Success");
+      component.$snotify.success("Données supprimées", "Success");
     }
     return del;
   } catch (error) {

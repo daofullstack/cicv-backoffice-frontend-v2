@@ -83,10 +83,10 @@
 
           <v-list>
             <v-list-tile :to="{name: 'userProfile'}">
-              <v-list-tile-title>Profile</v-list-tile-title>
+              <v-list-tile-title>Mon profil</v-list-tile-title>
             </v-list-tile>
             <v-list-tile :to="{name: 'logout'}">
-              <v-list-tile-title>Logout</v-list-tile-title>
+              <v-list-tile-title>Se déconnecter</v-list-tile-title>
             </v-list-tile>
           </v-list>
         </v-menu>

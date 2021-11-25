@@ -106,7 +106,7 @@ export default {
           {
             data: "email",
             render: (data) => {
-              return `<button type="button" class="blue--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
+              return `<button type="button" class="green--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
                     <div class="v-btn__content">${data}</div>
                   </button>`;
             },

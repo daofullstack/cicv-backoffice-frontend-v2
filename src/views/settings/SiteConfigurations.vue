@@ -14,20 +14,20 @@ export default {
       // Breadcrumbs
       breadcrumbs: [
         {
-          text: "Dashboard",
+          text: "Tableau de bord",
           disabled: false,
-          href: "/"
+          href: "/",
         },
         {
           text: "Site Configurations",
           disabled: true,
-          href: "#"
-        }
+          href: "#",
+        },
       ],
       // Main
       mainData: {},
-      loading: false
+      loading: false,
     };
-  }
+  },
 };
 </script>

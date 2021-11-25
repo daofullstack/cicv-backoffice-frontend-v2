@@ -5,19 +5,19 @@
         <v-text-field
           v-model="editedItem.firstName"
           :rules="rules.firstName"
-          label="First Name"
+          label="Prénom"
           required
           class="required"
         ></v-text-field>
       </v-flex>
       <v-flex xs12 sm6>
-        <v-text-field v-model="editedItem.lastName" label="Last Name"></v-text-field>
+        <v-text-field v-model="editedItem.lastName" label="Nom"></v-text-field>
       </v-flex>
       <v-flex xs12 sm4>
         <v-text-field
           v-model="editedItem.username"
           :rules="rules.username"
-          label="Username"
+          label="Nom d'utilisateur"
           required
           class="required"
         ></v-text-field>
@@ -37,7 +37,7 @@
           v-model="editedItem.password"
           :append-icon="showPassword ? 'visibility' : 'visibility_off'"
           :type="showPassword ? 'text' : 'password'"
-          label="Password"
+          label="Mot de passe"
           :readonly="!changePassword"
           :append-outer-icon="changePassword ? 'lock_open' : 'lock'"
           @click:append-outer="changePassword = !changePassword"
@@ -46,7 +46,7 @@
       </v-flex>
       <v-flex xs12 sm4>
         <DatePicker
-          label="Date of Birth"
+          label="Date de naissance"
           :date.sync="editedItem.dateOfBirth"
           :rules="rules.dateOfBirth"
         ></DatePicker>
@@ -54,20 +54,20 @@
       <v-flex xs12 sm4>
         <v-text-field
           v-model="editedItem.phone"
-          label="Phone"
+          label="Téléphone"
           required
         ></v-text-field>
       </v-flex>
       <v-flex xs12 sm4>
         <v-radio-group v-model="editedItem.gender" row class="justify-center">
-          <v-radio label="Male" value="male" color="blue"></v-radio>
-          <v-radio label="Female" value="female" color="blue"></v-radio>
+          <v-radio label="Homme" value="male" color="blue"></v-radio>
+          <v-radio label="Femme" value="female" color="blue"></v-radio>
         </v-radio-group>
       </v-flex>
     </v-layout>
     <Address :value.sync="editedItem.address" :required="false" :rules="rules.required" />
     <v-layout align-end justify-center pt-4>
-      <v-btn color="primary" round :loading="loadingBtn" :disabled="!valid" @click.native="save">Save</v-btn>
+      <v-btn color="primary" round :loading="loadingBtn" :disabled="!valid" @click.native="save">Enregistrer</v-btn>
     </v-layout>
   </v-form>
 </template>
@@ -111,23 +111,23 @@ export default {
       showPassword: false,
       changePassword: false,
       rules: {
-        firstName: [v => !!v || "First name is required"],
+        firstName: [v => !!v || "Le prénom est obligatoire"],
         username: [
-          v => !!v || "Username is required",
-          v => v.length >= 4 || "Username must have at least 4 letters.",
-          v => /^([a-zA-Z0-9._])+$/.test(v) || "Character not allowed. Allowed: (a-z), (A-Z), (0-9), (.), (_)"
+          v => !!v || "Le nom d'utilisateur est obligatoire",
+          v => v.length >= 4 || "Le nom d'utilisateur doit avoir au moins 4 lettres.",
+          v => /^([a-zA-Z0-9._])+$/.test(v) || "Caractère non autorisé. Autorisé: (a-z), (A-Z), (0-9), (.), (_)"
         ],
         email: [
-          v => !!v || "Email is required",
-          v => this.isEmailValid(v) || "Email is not valid"
+          v => !!v || "Email obligatoire",
+          v => this.isEmailValid(v) || "Email non valide"
         ],
         password: [
-          v => !!v || "Password is required",
-          v => (!!v && v.length >= 5) || "Password must have at least 4 letters"
+          v => !!v || "Le mot de passe est obligatoire",
+          v => (!!v && v.length >= 5) || "Le mot de passe doit avoir au moins 4 lettres"
         ],
-        role: [v => !!v || "Role is required"],
-        dateOfBirth: [v => !!v || "Date of Birth is required"],
-        required: [v => !!v || "This field is required"],
+        role: [v => !!v || "Le rôle est obligatoire"],
+        dateOfBirth: [v => !!v || "La date de naissance est obligatoire"],
+        required: [v => !!v || "Ce champ est obligatoire"],
       },
       // =================
     }
@@ -178,7 +178,7 @@ export default {
           const user = await updateMyProfile(data);
           this.$emit("update:mainData", {...user.data.data});
           this.setProfile(user.data.data);
-          this.$snotify.success("Data saved!", "Success");
+          this.$snotify.success("Données enregistrées!", "Success");
           return;
         }
       } catch (error) {

@@ -17,7 +17,7 @@
                 <v-icon>camera_alt</v-icon>
               </v-btn>
             </template>
-            <span>Update Photo</span>
+            <span>Mettre à jour l'image la photo</span>
           </v-tooltip>
         </v-avatar>
         <h3 class="headline">
@@ -31,7 +31,7 @@
     <v-dialog scrollable persistent v-model="uploadDialog" max-width="980px">
       <v-card v-loading="loading" height="568px">
         <v-card-title>
-          <span class="headline">Update Image</span>
+          <span class="headline">Mettre à jour l'image</span>
           <v-spacer></v-spacer>
           <v-switch v-model="useImage" label="Use Image" class="justify-end"></v-switch>
         </v-card-title>
@@ -141,7 +141,7 @@ export default {
         this.$emit("update:mainData", user.data.data);
         this.setProfile(user.data.data);
         this.mainData.useImage = this.useImage;
-        return this.$snotify.success("Data saved!", "Success");
+        return this.$snotify.success("Données enregistrées!", "Success");
       } catch (error) {
         this.notifyErrors(error);
       } finally {
@@ -167,7 +167,7 @@ export default {
         this.$emit("update:mainData", cloneMainData);
         this.setProfile(cloneMainData);
         this.mainData.useImage = this.useImage;
-        return this.$snotify.success("Avatar saved!", "Success");
+        return this.$snotify.success("Avatar enregistré !", "Success");
       } catch (error) {
         this.notifyErrors(error);
       } finally {

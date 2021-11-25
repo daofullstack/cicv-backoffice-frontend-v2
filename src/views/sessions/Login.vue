@@ -6,7 +6,7 @@
           <v-card-text>
             <v-layout row mt-4 mb-4>
               <v-flex xs12>
-                <h2 class="text-xs-center primary-color">Welcome to CICV!</h2>
+                <h2 class="text-xs-center primary-color">Bienvenue sur CICV!</h2>
               </v-flex>
             </v-layout>
 
@@ -21,7 +21,7 @@
                 class="pl-4 pr-4"
                 prepend-icon="person"
                 name="username"
-                label="Username"
+                label="Nom utilisateur"
                 color="orange"
                 v-model="credentials.username"
                 :rules="rules.username"
@@ -32,7 +32,7 @@
                 class="pl-4 pr-4"
                 prepend-icon="lock"
                 name="password"
-                label="Password"
+                label="Mot de passe"
                 type="password"
                 v-model="credentials.password"
                 :rules="rules.password"
@@ -51,21 +51,21 @@
                     round
                     type="submit"
                     form="loginForm"
-                    >Login</v-btn
+                    >Se connecter</v-btn
                   >
                 </div>
               </v-flex>
               <v-flex xs6>
                 <div class="text-xs-left pl-4">
                   <router-link to="forgot-password" class="primary-color-1"
-                    >Forgot Password</router-link
+                    >Mot de passe oublier</router-link
                   >
                 </div>
               </v-flex>
               <v-flex xs6>
                 <div class="text-xs-right pr-4">
                   <router-link to="register" class="primary-color-2"
-                    >Register</router-link
+                    >S'inscrire</router-link
                   >
                 </div>
               </v-flex>
@@ -93,13 +93,13 @@ export default {
     },
     rules: {
       username: [
-        (v) => !!v || "Username is required",
-        (v) => v.length >= 4 || "Username must have at least 4 letters.",
+        (v) => !!v || "Le nom d'utilisateur est obligatoire",
+        (v) => v.length >= 4 || "Le nom d'utilisateur doit avoir au moins 4 lettres.",
         (v) =>
           /^([a-zA-Z0-9._])+$/.test(v) ||
-          "Character not allowed. Allowed: (a-z), (A-Z), (0-9), (.), (_)",
+          "Caractère non autorisé.Autorisé: (a-z), (A-Z), (0-9), (.), (_)",
       ],
-      password: [(v) => !!v || "Password is required"],
+      password: [(v) => !!v || "Le mot de passe est obligatoire"],
     },
     valid: false,
     loading: false,

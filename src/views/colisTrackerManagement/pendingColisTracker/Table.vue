@@ -1,10 +1,10 @@
 <template>
-  <DataTable :table="table" ref="usersTable2" />
+  <DataTable :table="table" ref="colisTrackerTable" />
 </template>
 
 <script>
 import DataTable from "../../../components/helpers/DataTable";
-import { updateUser } from "../../../api/userManagement2/users";
+import { updateOne } from "../../../api/colisTrackerManagement/colis_tracker";
 
 export default {
   components: { DataTable },
@@ -94,7 +94,7 @@ export default {
           {
             data: "email",
             render: (data) => {
-              return `<button type="button" class="blue--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
+              return `<button type="button" class="warning--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
                     <div class="v-btn__content">${data}</div>
                   </button>`;
             },
@@ -135,47 +135,48 @@ export default {
       };
       const activate = await this.$root.$confirm(
         "Activate?",
-        "Are you sure you want to activate this user?",
+        "Êtes-vous sûr de vouloir activer cet utilisateur ?",
         { color: "success lighten-1" }
       );
       try {
         if (activate) {
-          this.$root.$dialogLoader.show("Please wait...", { color: "primary" });
-          await updateUser(body);
+          this.$root.$dialogLoader.show("Veuillez patienter svp...", { color: "primary" });
+          await updateOne(body);
           this.$root.$dialogLoader.hide();
-          this.$refs.usersTable2.refreshTable();
-          this.$snotify.success("User activated", "Success");
+          this.$refs.colisTrackerTable.refreshTable();
+          this.$snotify.success("Utilisateur activé", "Success");
         }
       } catch (error) {
-        this.$snotify.error("Failed to activate User!", "Error");
+        this.$snotify.error("Échec de l'activation de l'utilisateur !", "Error");
         this.$root.$dialogLoader.hide();
       }
     },
-    async activateSelected() {
-      const users = JSON.parse(JSON.stringify(this.table.selected));
-      if (users.length < 1) return this.$snotify.error("Please select Users", "Error");
-      const activate = await this.$root.$confirm(
-        "Activate?",
-        "Are you sure you want to activate selected users?",
-        { color: "success lighten-1" }
+    async archiveSelected() {
+      const datas = JSON.parse(JSON.stringify(this.table.selected));
+      const filtered = datas.filter((data) => !this.isSelf(data));
+      if (filtered.length < 1)
+        return this.$snotify.error("Veuillez sélectionner des données autres que vous-même", "Error");
+      const del = await this.$root.$confirm(
+        "Archiver?",
+        "Êtes-vous sûr de vouloir archiver les données sélectionnées ?",
+        { color: "error lighten-1" }
       );
       try {
-        if (activate) {
-          this.$root.$dialogLoader.show("Please wait...", { color: "primary" });
-          const activateUsers = users.map((user) => {
-            return updateUser({
-              _id: user._id,
-              isActive: true,
-              isPending: false,
+        if (del) {
+          this.$root.$dialogLoader.show("Veuillez patienter svp...", { color: "primary" });
+          const archiveUsers = filtered.map((data) => {
+            return updateOne({
+              _id: data._id,
+              isActive: false,
             });
           });
-          await Promise.all(activateUsers);
+          await Promise.all(archiveUsers);
           this.$root.$dialogLoader.hide();
-          this.$refs.usersTable2.refreshTable();
-          this.$snotify.success("Selected users activated", "Success");
+          this.$refs.colisTable.refreshTable();
+          this.$snotify.success("Données sélectionnées archivées", "Success");
         }
       } catch (error) {
-        this.$snotify.error("Failed to activate user!", "Error");
+        this.$snotify.error("Données sélectionnées archivées", "Error");
         this.$root.$dialogLoader.hide();
       }
     },

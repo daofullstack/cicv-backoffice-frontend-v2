@@ -1,7 +1,7 @@
 <template>
   <div class="page-layout">
     <g-breadcrumbs :items="breadcrumbs" />
-    <v-tabs class="g-tabs" slider-color="primary">
+    <v-tabs class="g-tabs" slider-color="secondary">
       <v-tab :to="{ name: 'deliveryManTable' }">Agent</v-tab>
     </v-tabs>
     <router-view></router-view>
@@ -15,7 +15,7 @@ export default {
       // Breadcrumbs
       breadcrumbs: [
         {
-          text: "Dashboard",
+          text: "Tableau de bord",
           disabled: false,
           href: "#",
         },

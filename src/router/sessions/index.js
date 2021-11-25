@@ -8,37 +8,37 @@ const sessions = [
   {
     path: '/login',
     name: 'login',
-    meta: { title: 'Login', requiresAuth: false, default: true },
+    meta: { title: 'Se connecter', requiresAuth: false, default: true },
     component: Login
   },
   {
     path: '/logout',
     name: 'logout',
-    meta: { title: 'Logout', requiresAuth: true, default: true },
+    meta: { title: 'Se connecter', requiresAuth: true, default: true },
     component: Login
   },
   {
     path: '/register',
     name: 'register',
-    meta: { title: 'Register', requiresAuth: false, default: true },
+    meta: { title: 'S\'inscrire', requiresAuth: false, default: true },
     component: Register
   },
   {
     path: '/activate/:token',
     name: 'activatePage',
-    meta: { title: 'Activate User', requiresAuth: false, default: true },
+    meta: { title: 'Activer l\'utilisateur', requiresAuth: false, default: true },
     component: ActivatePage
   },
   {
     path: '/forgot-password',
     name: 'forgotPassword',
-    meta: { title: 'Forgot Password', requiresAuth: false, default: true },
+    meta: { title: 'Mot de passe oublier', requiresAuth: false, default: true },
     component: ForgotPassword
   },
   {
     path: '/reset-password/:token',
     name: 'resetPassword',
-    meta: { title: 'Reset Password', requiresAuth: false, default: true },
+    meta: { title: 'Réinitialiser le mot de passe', requiresAuth: false, default: true },
     component: ResetPassword
   }
 ];

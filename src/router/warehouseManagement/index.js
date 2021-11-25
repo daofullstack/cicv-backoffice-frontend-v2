@@ -18,7 +18,7 @@ const warehouseManagement = [
         component: Table,
         props: true,
         meta: {
-          title: 'Liste des warehouse',
+          title: 'Liste des dépots',
           layout: 'admin',
           requiresAuth: true,
           requiresAccess: true
@@ -31,7 +31,7 @@ const warehouseManagement = [
         component: Form,
         props: true,
         meta: {
-          title: 'Ajouter un warehouse',
+          title: 'Ajouter un dépot',
           type: 'add',
           layout: 'admin',
           requiresAuth: true,

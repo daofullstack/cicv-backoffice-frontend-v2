@@ -58,7 +58,7 @@ const colisTrackerManagement = [
         component: PendingTable,
         props: true,
         meta: {
-          title: 'En attente',
+          title: 'Validé',
           layout: 'admin',
           requiresAuth: true,
           requiresAccess: true

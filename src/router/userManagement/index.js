@@ -18,7 +18,7 @@ const userManagement = [
         component: UsersTable,
         props: true,
         meta: {
-          title: 'Users Table',
+          title: 'Liste des utilisateurs',
           layout: 'admin',
           requiresAuth: true,
           requiresAccess: true
@@ -31,7 +31,7 @@ const userManagement = [
         component: UsersForm,
         props: true,
         meta: {
-          title: 'Add User',
+          title: 'Ajouter un utilisateur',
           type: 'add',
           layout: 'admin',
           requiresAuth: true,
@@ -58,7 +58,7 @@ const userManagement = [
         component: PendingUsersTable,
         props: true,
         meta: {
-          title: 'Pending Users',
+          title: 'Utilisateurs en attente',
           layout: 'admin',
           requiresAuth: true,
           requiresAccess: true

@@ -6,7 +6,7 @@
           <v-card-text>
             <v-layout row mt-4 mb-4>
               <v-flex xs12>
-                <h2 class="text-xs-center primary-color">Reset Password</h2>
+                <h2 class="text-xs-center primary-color">Réinitialiser le mot de passe</h2>
               </v-flex>
             </v-layout>
 
@@ -20,7 +20,7 @@
               <v-text-field
                 class="pl-4 pr-4"
                 prepend-icon="lock"
-                label="New Password"
+                label="Nouveau mot de passe"
                 type="password"
                 v-model="resetPasswordData.newPassword"
                 :rules="rules.password"
@@ -29,7 +29,7 @@
               <v-text-field
                 class="pl-4 pr-4"
                 prepend-icon="lock"
-                label="Confirmation Password"
+                label="Confirmation de mot de passe"
                 type="password"
                 v-model="resetPasswordData.confirmPassword"
                 :rules="rules.confirmPassword"
@@ -53,7 +53,7 @@
               </v-flex>
               <v-flex xs12>
                 <div class="text-xs-center pt-3">
-                  <router-link :to="{name: 'login'}">Back to login</router-link>
+                  <router-link :to="{name: 'login'}">Retour au login</router-link>
                 </div>
               </v-flex>
             </v-layout>
@@ -74,10 +74,10 @@ export default {
         confirmPassword: ""
       },
       rules: {
-        password: [v => !!v || "Password is required"],
+        password: [v => !!v || "Le mot de passe est obligatoire"],
         confirmPassword: [
-          v => !!v || 'Confirmation Password is required',
-          v => (this.resetPasswordData.newPassword === v) || 'Password must match'
+          v => !!v || 'La confirmation du mot de passe est obligatoire',
+          v => (this.resetPasswordData.newPassword === v) || 'Le mot de passe doit être identique'
         ]
       },
       valid: false,
@@ -95,7 +95,7 @@ export default {
           await resetPassword({
             password: this.resetPasswordData.newPassword
           }, this.$route.params.token);
-          this.$snotify.success(`Success update your password, please login`, "Success");
+          this.$snotify.success(`Mise à jour effectuée avec succès, veuillez vous connecter`, "Success");
           this.$router.push({ name: "login" });
         }
       } catch (error) {

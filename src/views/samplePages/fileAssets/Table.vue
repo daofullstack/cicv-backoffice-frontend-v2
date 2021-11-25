@@ -119,7 +119,7 @@ export default {
           {
             data: "path",
             render: (data) => {
-              return `<a href="${data}" target="_blank" class="blue--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
+              return `<a href="${data}" target="_blank" class="warning--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
                     <div class="v-btn__content">Download</div>
                   </a>`;
             },
@@ -165,12 +165,12 @@ export default {
       if (files.length < 1) return this.$snotify.error("Please select a file", "Error");
       const del = await this.$root.$confirm(
         "Delete?",
-        "Are you sure you want to delete selected files?",
+        "Êtes-vous sûr de vouloir supprimer les fichiers sélectionnés ?",
         { color: "error lighten-1" }
       );
       try {
         if (del) {
-          this.$root.$dialogLoader.show("Please wait...", { color: "primary" });
+          this.$root.$dialogLoader.show("Veuillez patienter svp...", { color: "primary" });
           const deleteFiles = files.map((file) => {
             const url = "assets/" + file._id;
             return deleteRowTable(url);

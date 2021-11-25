@@ -2,17 +2,17 @@
   <div>
     <v-toolbar flat class="main-nav main-title">
       <v-list class="pa-0">
-        <v-list-tile avatar :to="{ name: 'dashboard' }">
+        <v-list-tile avatar :to="{ name: 'Tableau de bord' }">
           <v-list-tile-avatar>
             <img
-              :to="{ name: 'dashboard' }"
-              src="@/assets/logo_cicv.jpeg"
+              :to="{ name: 'Tableau de bord' }"
+              src="@/assets/logo_cicv.png"
               v-if="miniVariant"
             />
           </v-list-tile-avatar>
 
           <v-list-tile-content>
-            <img src="@/assets/logo_cicv.jpeg" style="width: 75%" />
+            <img src="@/assets/logo_cicv.png" style="width: 75%" />
           </v-list-tile-content>
         </v-list-tile>
       </v-list>

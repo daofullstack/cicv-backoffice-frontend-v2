@@ -11,11 +11,11 @@ Vue.use(Vuetify, {
    */
   iconfont: 'mdi',
   theme: {
-    primary: '#26329D',
-    secondary: '#ef765f',
+    primary: '#f28300',
+    secondary: '#2e6e20',
     danger: '#ff4444',
-    warning: '#ffbb33',
+    warning: '#8baf19',
     success: '#00c851',
-    info: '#33b5e5'
+    info: '#8baf19'
   }
 })

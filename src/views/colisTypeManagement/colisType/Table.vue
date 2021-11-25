@@ -41,7 +41,7 @@ export default {
           },
           topRightButtons: [
             {
-              text: "Add Colis type",
+              text: "Ajouter un type de colis",
               icon: "add",
               isVisible: () => this.hasAccess(["write", "admin"]),
               action: () => {
@@ -50,7 +50,7 @@ export default {
             },
             {
               groupName: "moreActions",
-              text: "Archive Selected",
+              text: "Archiver les données sélectionnées",
               icon: "clear_all",
               isVisible: () => this.hasAccess(["admin"]),
               action: () => {
@@ -81,16 +81,13 @@ export default {
         },
 
         headers: [
-          { text: "name", align: "left" },
-          { text: "description" },
-          { text: "Created At" },
+          { text: "Nom", align: "left" },
+          { text: "Description" },
+          { text: "Crée le" },
         ],
         contents: [
           {
             data: "name",
-            render: (data, full) => {
-              return `${data || ""} ${full.name || ""}`;
-            },
           },
           { data: "description" },
           {
@@ -102,7 +99,7 @@ export default {
         ],
         actions: [
           {
-            text: "View or Edit",
+            text: "Afficher ou modifier",
             icon: "mdi-lead-pencil",
             color: "teal lighten-2",
             isVisible: () => this.hasAccess(["read", "write", "admin"]),
@@ -111,7 +108,7 @@ export default {
             },
           },
           {
-            text: "Delete Data",
+            text: "Suprimmer les données",
             icon: "delete",
             color: "red accent-2",
             isVisible: (data) => this.hasAccess(["admin"]) && !this.isSelf(data),
@@ -121,7 +118,7 @@ export default {
             },
           },
           {
-            text: "Activate Data",
+            text: "Activer les données",
             icon: "check",
             color: "green",
             showInArchived: true,
@@ -159,15 +156,15 @@ export default {
       const datas = JSON.parse(JSON.stringify(this.table.selected));
       const filtered = datas.filter((data) => !this.isSelf(data));
       if (filtered.length < 1)
-        return this.$snotify.error("Please select datas other than yourself", "Error");
+        return this.$snotify.error("Veuillez sélectionner des données autres que vous-même", "Erreur");
       const del = await this.$root.$confirm(
-        "Archive?",
-        "Are you sure you want to archive selected datas?",
+        "Archiver?",
+        "Êtes-vous sûr de vouloir archiver les données sélectionnées ?",
         { color: "error lighten-1" }
       );
       try {
         if (del) {
-          this.$root.$dialogLoader.show("Please wait...", { color: "primary" });
+          this.$root.$dialogLoader.show("Veuillez patienter svp...", { color: "primary" });
           const archiveUsers = filtered.map((data) => {
             return updateOne({
               _id: data._id,
@@ -177,10 +174,10 @@ export default {
           await Promise.all(archiveUsers);
           this.$root.$dialogLoader.hide();
           this.$refs.colisTypeTable.refreshTable();
-          this.$snotify.success("Selected datas archived", "Success");
+          this.$snotify.success("Données sélectionnées archivées", "Succès");
         }
       } catch (error) {
-        this.$snotify.error("Failed to archive data!", "Error");
+        this.$snotify.error("Échec de l'archivage des données !", "Error");
         this.$root.$dialogLoader.hide();
       }
     },

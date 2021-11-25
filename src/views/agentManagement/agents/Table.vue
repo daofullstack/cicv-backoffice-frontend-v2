@@ -19,7 +19,7 @@ export default {
        * Please open the documentation file for more info and usage.
        */
       table: {
-        title: "agent Table",
+        title: "agents",
         toolbar: {
           archivedTableSwitcher: true,
           search: true,
@@ -57,9 +57,10 @@ export default {
           ],
           topRightButtons: [
             {
-              text: "Add agent",
+              text: "ajouter un agent",
 
               icon: "add",
+
               isVisible: () => this.hasAccess(["write", "admin"]),
               action: () => {
                 this.$router.push({ name: "agentAdd" });
@@ -89,11 +90,11 @@ export default {
           },
         },
         headers: [
-          { text: "Name", align: "left" },
-          { text: "Username" },
-          { text: "Phone" },
+          { text: "Nom", align: "left" },
+          { text: "Utilisateur" },
+          { text: "Contact" },
           { text: "Email" },
-          { text: "Created At" },
+          { text: "Date de création" },
         ],
         contents: [
           {
@@ -107,7 +108,7 @@ export default {
           {
             data: "email",
             render: (data) => {
-              return `<button type="button" class="blue--text text-lowercase theme--dark v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
+              return `<button type="button" class="green--text text-lowercase v-btn v-btn--depressed v-btn--outline v-btn--round v-btn--small">
                     <div class="v-btn__content">${data}</div>
                   </button>`;
             },
@@ -115,7 +116,7 @@ export default {
               alert(`Column action. Get row data, email: ${data.email}`);
             },
           },
-          { data: "role.name" },
+
           { data: "role.level", hideColumn: true },
           { data: "role._id", hideColumn: true },
           {
@@ -200,15 +201,20 @@ export default {
       const users = JSON.parse(JSON.stringify(this.table.selected));
       const filtered = users.filter((user) => !this.isSelf(user));
       if (filtered.length < 1)
-        return this.$snotify.error("Please select users other than yourself", "Error");
+        return this.$snotify.error(
+          "Veuillez sélectionner des utilisateurs autres que vous",
+          "Error"
+        );
       const del = await this.$root.$confirm(
-        "Archive?",
-        "Are you sure you want to archive selected users?",
+        "Archiver?",
+        "Voulez-vous vraiment archiver les utilisateurs sélectionnés ?",
         { color: "error lighten-1" }
       );
       try {
         if (del) {
-          this.$root.$dialogLoader.show("Please wait...", { color: "primary" });
+          this.$root.$dialogLoader.show("S'il vous plaît, attendez...", {
+            color: "primary",
+          });
           const archiveUsers = filtered.map((user) => {
             return updateUser({
               _id: user._id,
@@ -218,10 +224,10 @@ export default {
           await Promise.all(archiveUsers);
           this.$root.$dialogLoader.hide();
           this.$refs.agentTable.refreshTable();
-          this.$snotify.success("Selected users archived", "Success");
+          this.$snotify.success("Utilisateurs sélectionnés archivés", "Success");
         }
       } catch (error) {
-        this.$snotify.error("Failed to archive user!", "Error");
+        this.$snotify.error("Échec de l'archivage de l'utilisateur !", "Error");
         this.$root.$dialogLoader.hide();
       }
     },

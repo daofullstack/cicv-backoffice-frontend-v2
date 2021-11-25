@@ -27,7 +27,7 @@
                   />
                 </v-avatar>
               </template>
-              <span>Click to randomize</span>
+              <span>generer avater</span>
             </v-tooltip>
           </div>
         </v-flex>
@@ -36,7 +36,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.firstName"
-            label="First Name"
+            label="Nom"
             class="required"
             :rules="rules.firstName"
             required
@@ -46,7 +46,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.lastName"
-            label="Last Name"
+            label="Prénom"
             :readonly="isReadonly"
           ></v-text-field>
         </v-flex>
@@ -56,14 +56,14 @@
               <v-text-field
                 v-model="editedItem.username"
                 :rules="rules.username"
-                label="Username"
+                label="Nom d'utilisateur"
                 class="required"
                 required
                 :readonly="isReadonly || isAdmin"
                 v-on="isReadonly || isAdmin ? on : null"
               ></v-text-field>
             </template>
-            <span>Only Admin can edit</span>
+            <span>Seul l'administrateur peut l'editer</span>
           </v-tooltip>
         </v-flex>
         <v-flex xs12 sm4 md4>
@@ -80,7 +80,7 @@
                 v-on="isReadonly || isAdmin ? on : null"
               ></v-text-field>
             </template>
-            <span>Only Admin can edit</span>
+            <span>Seul l'administrateur peut l'editer</span>
           </v-tooltip>
         </v-flex>
         <v-flex xs12 sm4 md4 v-if="!$route.params.id">
@@ -99,7 +99,7 @@
                 v-on="isReadonly || isAdmin ? on : null"
               ></v-text-field>
             </template>
-            <span>Only Admin can edit</span>
+            <span>Seul l'administrateur peut l'editer</span>
           </v-tooltip>
         </v-flex>
         <v-flex xs12 sm4 md4 v-else>
@@ -119,7 +119,7 @@
                 v-on="isReadonly || isAdmin ? on : null"
               ></v-text-field>
             </template>
-            <span>Only Admin can edit</span>
+            <span>Seul l'administrateur peut l'editer</span>
           </v-tooltip>
         </v-flex>
         <v-flex xs12 sm4 md4>
@@ -129,13 +129,13 @@
             class="justify-center"
             :readonly="isReadonly"
           >
-            <v-radio label="Male" value="male" color="blue"></v-radio>
-            <v-radio label="Female" value="female" color="blue"></v-radio>
+            <v-radio label="Homme" value="male" color="blue"></v-radio>
+            <v-radio label="Femme" value="female" color="blue"></v-radio>
           </v-radio-group>
         </v-flex>
         <v-flex xs12 sm4 md4>
           <DatePicker
-            label="Date of Birth"
+            label="Date d'anniversaire"
             :date.sync="editedItem.dateOfBirth"
             :rules="rules.dateOfBirth"
             required
@@ -146,7 +146,7 @@
         <v-flex xs12 sm4 md4>
           <v-text-field
             v-model="editedItem.phone"
-            label="Phone"
+            label="Numéro de téléphone"
             required
             :readonly="isReadonly"
           ></v-text-field>
@@ -156,7 +156,7 @@
     </v-form>
     <v-layout align-end justify-center pt-4>
       <v-btn class="secondary-color" flat round :disabled="loading" to="/agents/table"
-        >Cancel</v-btn
+        >Annuler</v-btn
       >
       <v-btn
         class="primary-color-2"
@@ -165,7 +165,7 @@
         :disabled="!valid"
         @click.native="save"
         v-if="!isReadonly"
-        >Save</v-btn
+        >Enregistrer</v-btn
       >
     </v-layout>
   </v-container>

@@ -12,18 +12,18 @@ export default {
       // Breadcrumbs
       breadcrumbs: [
         {
-          text: "Dashboard",
+          text: "Tableau de bord",
           disabled: false,
-          href: "#"
+          href: "#",
         },
         {
           text: "Documentations",
           disabled: false,
-          href: "#"
-        }
-      ]
+          href: "#",
+        },
+      ],
       // =================
     };
-  }
+  },
 };
 </script>
